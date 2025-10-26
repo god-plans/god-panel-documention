@@ -1,66 +1,80 @@
 ---
 title: Common Components
-description: Reusable UI components for forms, buttons, cards, and more
+description: Essential UI components for navigation, feedback, and user experience
 category: components
 order: 3
 ---
 
 # Common Components
 
-God Panel's common components provide a solid foundation for building consistent and accessible user interfaces. These components are designed to be flexible, themeable, and easy to integrate.
+God Panel's common components provide essential UI functionality for navigation, loading states, error handling, and user feedback. These components are built with Vuetify and follow the project's design system.
 
 ## Component Categories
 
-### 🎯 Form Components
-- **Input**: Text inputs with validation
-- **Textarea**: Multi-line text inputs
-- **Select**: Dropdown selection
-- **Checkbox**: Boolean inputs
-- **Radio**: Single-choice options
-- **Switch**: Toggle controls
+### 🧭 Navigation Components
+- **AppBar**: Main navigation header with logo and menu
+- **Logo**: Adaptive brand logo with theme support
 
-### 🔘 Button Components
-- **Button**: Primary UI actions
-- **IconButton**: Icon-only buttons
-- **ButtonGroup**: Grouped button controls
+### 🔄 Loading & Progress
+- **LoadingScreen**: Full-screen loading with animations
+- **ProgressBar**: Top progress indicator
 
-### 📦 Layout Components
-- **Card**: Content containers
-- **Container**: Page layout wrapper
-- **Grid**: Responsive grid system
-- **Flex**: Flexible layouts
+### 🔔 Feedback Components
+- **ToastContainer & ToastItem**: Toast notification system
+- **ErrorBoundary**: Error handling and recovery
 
-## Button Component
+### 🔍 Utility Components
+- **SearchNotFound**: Search results fallback
+- **Blank**: Empty state placeholder
 
-The `Button` component is the primary interactive element in your interface.
+## AppBar Component
+
+The main navigation header component with responsive design, theme toggle, and mobile menu support.
 
 ```vue
 <template>
-  <div class="space-y-4">
-    <!-- Basic buttons -->
-    <Button>Default Button</Button>
-    <Button variant="primary">Primary Button</Button>
-    <Button variant="secondary">Secondary Button</Button>
-    <Button variant="success">Success Button</Button>
-    <Button variant="warning">Warning Button</Button>
-    <Button variant="error">Error Button</Button>
+  <!-- Main application bar -->
+  <CommonAppBar />
+</template>
+```
 
-    <!-- Different sizes -->
-    <Button size="xs">XS Button</Button>
-    <Button size="sm">Small Button</Button>
-    <Button size="md">Medium Button</Button>
-    <Button size="lg">Large Button</Button>
-    <Button size="xl">XL Button</Button>
+### Features
 
-    <!-- With icons -->
-    <Button icon="save">Save Changes</Button>
-    <Button icon="plus" variant="primary">Add Item</Button>
+- **Responsive Design**: Adapts to different screen sizes
+- **Theme Toggle**: Dark/light mode switching
+- **Mobile Menu**: Collapsible navigation for mobile devices
+- **Logo Integration**: Displays the application logo
+- **Active Route Highlighting**: Shows current page in navigation
 
-    <!-- Loading state -->
-    <Button :loading="isLoading">Processing...</Button>
+### Usage in Layouts
 
-    <!-- Disabled state -->
-    <Button disabled>Disabled Button</Button>
+```vue
+<!-- In your layout -->
+<template>
+  <div class="app-layout">
+    <CommonAppBar />
+    <main class="main-content">
+      <slot />
+    </main>
+  </div>
+</template>
+```
+
+## Logo Component
+
+Adaptive logo component that automatically switches between light and dark theme variants.
+
+```vue
+<template>
+  <div class="flex items-center gap-4">
+    <!-- Full logo with text -->
+    <CommonLogo variant="full" size="lg" />
+
+    <!-- Compact version -->
+    <CommonLogo variant="compact" size="md" />
+
+    <!-- Icon only -->
+    <CommonLogo variant="icon" size="sm" />
   </div>
 </template>
 ```
@@ -69,560 +83,499 @@ The `Button` component is the primary interactive element in your interface.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | string | 'default' | Button style variant |
-| `size` | string | 'md' | Button size |
-| `icon` | string | - | Icon name (from icon library) |
-| `loading` | boolean | false | Show loading spinner |
-| `disabled` | boolean | false | Disable button interaction |
-| `fullWidth` | boolean | false | Make button full width |
+| `variant` | `'full' \| 'compact' \| 'mono' \| 'icon'` | `'full'` | Logo style variant |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Logo size |
+| `color` | string | - | Custom color for mono variant |
+| `class` | string | - | Additional CSS classes |
 
-### Events
+### Variants
 
-| Event | Description |
-|-------|-------------|
-| `click` | Emitted when button is clicked |
+- **full**: Complete logo with text (default)
+- **compact**: Smaller version with text
+- **mono**: Monochrome version for navigation
+- **icon**: Icon-only version for buttons/headers
 
-## Input Component
+### Theme Integration
 
-Flexible input component with validation and accessibility features.
+The logo automatically adapts to the current theme:
 
 ```vue
-<template>
-  <div class="space-y-4">
-    <!-- Basic text input -->
-    <Input
-      v-model="email"
-      label="Email Address"
-      placeholder="Enter your email"
-      type="email"
-    />
-
-    <!-- With validation -->
-    <Input
-      v-model="password"
-      label="Password"
-      type="password"
-      :error="passwordError"
-      hint="Must be at least 8 characters"
-    />
-
-    <!-- Required field -->
-    <Input
-      v-model="username"
-      label="Username"
-      required
-      :error="usernameError"
-    />
-
-    <!-- Disabled state -->
-    <Input
-      label="Disabled Field"
-      disabled
-      value="Cannot edit this"
-    />
-  </div>
-</template>
-
 <script setup>
-const email = ref('')
-const password = ref('')
-const username = ref('')
+const { isDarkMode } = useSettingsStore()
 
-const passwordError = computed(() => {
-  if (password.value.length < 8) {
-    return 'Password must be at least 8 characters'
-  }
-  return ''
-})
-
-const usernameError = computed(() => {
-  if (!username.value) {
-    return 'Username is required'
-  }
-  return ''
-})
+// Logo automatically switches based on theme
+// Light mode: /full-logo.png, /logo.png
+// Dark mode: /god-pure-dark-full.png, /god-pure-dark.png
 </script>
 ```
 
-### Props
+## LoadingScreen Component
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `modelValue` | string \| number | - | Input value (v-model) |
-| `label` | string | - | Input label |
-| `placeholder` | string | - | Placeholder text |
-| `type` | string | 'text' | Input type |
-| `required` | boolean | false | Mark as required |
-| `disabled` | boolean | false | Disable input |
-| `error` | string | - | Error message |
-| `hint` | string | - | Helper text |
-
-### Events
-
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `update:modelValue` | string \| number | Emitted when value changes |
-| `blur` | Event | Emitted when input loses focus |
-| `focus` | Event | Emitted when input gains focus |
-
-## Card Component
-
-Content containers for organizing information.
+Full-screen loading component with animations and progress support.
 
 ```vue
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- Basic card -->
-    <Card>
-      <template #header>
-        <h3 class="text-lg font-semibold">Card Title</h3>
-      </template>
+  <div>
+    <!-- Basic loading -->
+    <CommonLoadingScreen />
 
-      <p class="text-gray-600 dark:text-gray-300">
-        Card content goes here. This is a flexible container for your content.
-      </p>
+    <!-- With custom message -->
+    <CommonLoadingScreen
+      title="Loading Dashboard"
+      subtitle="Preparing your workspace..."
+    />
 
-      <template #footer>
-        <div class="flex justify-between">
-          <Button variant="secondary" size="sm">Cancel</Button>
-          <Button variant="primary" size="sm">Save</Button>
-        </div>
-      </template>
-    </Card>
-
-    <!-- Card with image -->
-    <Card>
-      <template #image>
-        <img src="/placeholder.jpg" alt="Card image" class="w-full h-48 object-cover rounded-t-lg" />
-      </template>
-
-      <template #header>
-        <h3>Image Card</h3>
-      </template>
-
-      <p>Card with an image header.</p>
-    </Card>
+    <!-- With progress -->
+    <CommonLoadingScreen
+      title="Processing"
+      subtitle="Please wait..."
+      :show-progress="true"
+      :progress="75"
+    />
   </div>
 </template>
 ```
 
-### Slots
+### Props
 
-| Slot | Description |
-|------|-------------|
-| `default` | Card content |
-| `header` | Card header |
-| `footer` | Card footer |
-| `image` | Card image (shows above content) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | string | `'Loading...'` | Loading screen title |
+| `subtitle` | string | `'Please wait while we prepare your dashboard'` | Subtitle text |
+| `showProgress` | boolean | `false` | Show progress bar |
+| `progress` | number | `0` | Progress percentage (0-100) |
 
-## Form Components
+### Features
 
-### Select Component
+- **Animated Logo**: Bouncing logo animation
+- **Progress Dots**: Animated loading dots
+- **Progress Bar**: Optional progress indicator
+- **Customizable Text**: Title and subtitle support
+- **Responsive Design**: Works on all screen sizes
+- **Theme Integration**: Respects dark/light theme
+
+### Usage Scenarios
 
 ```vue
+<script setup>
+// During initial app load
+const { pending } = await useLazyAsyncData('initial-data', fetchInitialData)
+
+// During route transitions
+const { pending } = useLoadingIndicator()
+
+// During async operations
+const loading = ref(false)
+
+const performAction = async () => {
+  loading.value = true
+  try {
+    await apiCall()
+  } finally {
+    loading.value = false
+  }
+}
+</script>
+
 <template>
-  <Select
-    v-model="selectedCountry"
-    label="Country"
-    :options="countries"
-    placeholder="Select a country"
+  <CommonLoadingScreen
+    v-if="pending || loading"
+    title="Loading..."
+    subtitle="Please wait..."
   />
 </template>
-
-<script setup>
-const selectedCountry = ref('')
-
-const countries = [
-  { label: 'United States', value: 'us' },
-  { label: 'Canada', value: 'ca' },
-  { label: 'United Kingdom', value: 'uk' },
-  { label: 'Germany', value: 'de' }
-]
-</script>
 ```
 
-### Checkbox Component
+## ProgressBar Component
+
+Fixed top progress bar for indicating loading states.
 
 ```vue
 <template>
-  <div class="space-y-2">
-    <Checkbox
-      v-model="notifications"
-      label="Email notifications"
-    />
-    <Checkbox
-      v-model="marketing"
-      label="Marketing emails"
-    />
-    <Checkbox
-      v-model="security"
-      label="Security alerts"
-      disabled
-    />
-  </div>
+  <!-- Automatic progress during navigation -->
+  <CommonProgressBar :is-loading="pending" />
+
+  <!-- Manual control -->
+  <CommonProgressBar :is-loading="isProcessing" :progress="uploadProgress" />
 </template>
 
 <script setup>
-const notifications = ref(true)
-const marketing = ref(false)
-const security = ref(true)
+const { pending } = useLoadingIndicator()
+const isProcessing = ref(false)
+const uploadProgress = ref(0)
 </script>
 ```
 
-## Layout Components
+### Props
 
-### Grid Component
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `isLoading` | boolean | `false` | Show/hide progress bar |
+| `progress` | number | `0` | Progress percentage (0-100) |
 
-```vue
-<template>
-  <!-- Responsive grid -->
-  <Grid :columns="{ default: 1, md: 2, lg: 3 }" gap="6">
-    <Card v-for="item in items" :key="item.id">
-      {{ item.title }}
-    </Card>
-  </Grid>
+### Features
 
-  <!-- Fixed columns -->
-  <Grid columns="3" gap="4">
-    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded">
-      Column 1
-    </div>
-    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded">
-      Column 2
-    </div>
-    <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded">
-      Column 3
-    </div>
-  </Grid>
-</template>
-```
+- **Fixed Position**: Stays at top of viewport
+- **Smooth Animation**: CSS transitions for progress changes
+- **Gradient Fill**: Attractive gradient background
+- **Theme Colors**: Uses current theme colors
+- **Auto-hide**: Disappears when not loading
 
-### Container Component
+## Toast System
+
+The toast notification system consists of two components working together.
+
+### ToastContainer
 
 ```vue
 <template>
-  <Container size="xl" class="py-8">
-    <h1 class="text-3xl font-bold mb-6">Page Title</h1>
-
-    <div class="prose prose-lg dark:prose-invert max-w-none">
-      <!-- Page content -->
-    </div>
-  </Container>
+  <!-- Toast container automatically displays toasts -->
+  <CommonToastContainer />
 </template>
 ```
+
+### ToastItem
+
+Individual toast notifications with different types and positions.
+
+```vue
+<template>
+  <!-- Success toast -->
+  <CommonToastItem
+    :toast="{
+      id: '1',
+      type: 'success',
+      title: 'Success!',
+      message: 'Data saved successfully',
+      duration: 3000
+    }"
+    @close="removeToast"
+  />
+
+  <!-- Error toast -->
+  <CommonToastItem
+    :toast="{
+      id: '2',
+      type: 'error',
+      title: 'Error',
+      message: 'Failed to save data',
+      duration: 5000,
+      actions: [
+        { label: 'Retry', action: 'retry' },
+        { label: 'Dismiss', action: 'dismiss' }
+      ]
+    }"
+    @close="removeToast"
+    @action="handleToastAction"
+  />
+</template>
+```
+
+### Toast Types
+
+- **success**: Green success notifications
+- **error**: Red error notifications
+- **warning**: Orange warning notifications
+- **info**: Blue informational notifications
+
+### Using the Toast Composable
+
+```vue
+<script setup>
+const { showToast, toasts, removeToast } = useToast()
+
+// Show different types of toasts
+const handleSuccess = () => {
+  showToast({
+    type: 'success',
+    title: 'Success!',
+    message: 'Operation completed successfully'
+  })
+}
+
+const handleError = () => {
+  showToast({
+    type: 'error',
+    title: 'Error',
+    message: 'Something went wrong',
+    duration: 5000,
+    position: 'top-right'
+  })
+}
+
+const handleWarning = () => {
+  showToast({
+    type: 'warning',
+    title: 'Warning',
+    message: 'Please check your input',
+    actions: [
+      { label: 'Fix', action: 'fix' }
+    ]
+  })
+}
+</script>
+```
+
+## ErrorBoundary Component
+
+Comprehensive error handling component that catches and displays errors gracefully.
+
+```vue
+<template>
+  <!-- Wrap components that might fail -->
+  <CommonErrorBoundary
+    title="Something went wrong"
+    :show-retry="true"
+    :show-report="true"
+    @error="handleError"
+    @retry="handleRetry"
+  >
+    <DashboardChart />
+  </CommonErrorBoundary>
+
+  <!-- With custom error handling -->
+  <CommonErrorBoundary
+    :show-details="false"
+    :show-home="false"
+    @error="logError"
+  >
+    <ApiDataComponent />
+  </CommonErrorBoundary>
+</template>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | string | `'Something went wrong'` | Error title |
+| `showMessage` | boolean | `true` | Show error message |
+| `showDetails` | boolean | `true` | Show error details (dev only) |
+| `showRetry` | boolean | `true` | Show retry button |
+| `showReport` | boolean | `true` | Show report issue button |
+| `showHome` | boolean | `true` | Show go home button |
+| `fallback` | any | - | Custom fallback content |
+| `onError` | function | - | Error callback |
+| `onRetry` | function | - | Retry callback |
+
+### Features
+
+- **Error Catching**: Catches JavaScript errors in child components
+- **Structured Logging**: Creates detailed error reports
+- **Development Tools**: Shows error details in development
+- **Recovery Options**: Retry, report, and navigation actions
+- **Accessibility**: Screen reader friendly error messages
+- **Theme Integration**: Matches current theme colors
+
+### Error Handling
+
+```vue
+<script setup>
+const handleError = (error) => {
+  console.error('Component error:', error)
+  // Send to error tracking service
+  sendToErrorTracker(error)
+}
+
+const handleRetry = async () => {
+  // Reset component state
+  await resetComponentState()
+  // Retry the operation
+  await fetchData()
+}
+</script>
+```
+
+## SearchNotFound Component
+
+Empty state component for when search results are not found.
+
+```vue
+<template>
+  <!-- In search results -->
+  <CommonSearchNotFound
+    v-if="results.length === 0"
+    search-query="dashboard widgets"
+    :suggestions="[
+      'Try different keywords',
+      'Check spelling',
+      'Use broader search terms'
+    ]"
+  />
+</template>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `searchQuery` | string | - | The search term that was used |
+| `suggestions` | string[] | - | Array of helpful suggestions |
+| `title` | string | `'No results found'` | Custom title |
+| `message` | string | - | Custom message |
+
+## Blank Component
+
+Minimal placeholder component for empty states.
+
+```vue
+<template>
+  <!-- Empty state -->
+  <CommonBlank height="200px">
+    <div class="text-center">
+      <h3>No data available</h3>
+      <p class="text-grey">Check back later for updates</p>
+    </div>
+  </CommonBlank>
+</template>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `height` | string | `'100px'` | Component height |
+| `class` | string | - | Additional CSS classes |
 
 ## Theming and Customization
 
-### CSS Custom Properties
-
-All components use CSS custom properties for consistent theming:
-
-```css
-/* Component theming */
-:root {
-  --button-primary-bg: var(--color-primary);
-  --button-primary-text: var(--color-white);
-  --button-secondary-bg: var(--color-gray-100);
-  --button-secondary-text: var(--color-gray-900);
-
-  --input-border: var(--color-gray-300);
-  --input-border-focus: var(--color-primary);
-  --input-bg: var(--color-white);
-  --input-text: var(--color-gray-900);
-
-  --card-bg: var(--color-white);
-  --card-border: var(--color-gray-200);
-  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="dark"] {
-  --button-secondary-bg: var(--color-gray-800);
-  --button-secondary-text: var(--color-gray-100);
-
-  --input-bg: var(--color-gray-800);
-  --input-text: var(--color-gray-100);
-  --input-border: var(--color-gray-600);
-
-  --card-bg: var(--color-gray-800);
-  --card-border: var(--color-gray-700);
-}
-```
-
-### Component Variants
-
-Most components support multiple variants:
-
-```vue
-<!-- Button variants -->
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-<Button variant="success">Success</Button>
-<Button variant="warning">Warning</Button>
-<Button variant="error">Error</Button>
-<Button variant="info">Info</Button>
-
-<!-- Size variants -->
-<Button size="xs">XS</Button>
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>
-<Button size="xl">XL</Button>
-```
-
-## Accessibility Features
-
-### Keyboard Navigation
-
-All components support full keyboard navigation:
-
-- **Tab**: Navigate between components
-- **Enter/Space**: Activate buttons and checkboxes
-- **Arrow keys**: Navigate select options and radio groups
-- **Escape**: Close modals and dropdowns
-
-### Screen Reader Support
-
-Components include proper ARIA attributes:
-
-```vue
-<!-- Automatic ARIA attributes -->
-<Button aria-label="Save changes" />
-<Input label="Email address" aria-describedby="email-hint" />
-<Checkbox label="Remember me" aria-checked="true" />
-```
-
-### Focus Management
-
-Visual focus indicators and logical focus flow:
-
-```css
-/* Focus styles */
-.button:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
-}
-```
-
-## Advanced Usage
-
-### Custom Validation
-
-```vue
-<template>
-  <Input
-    v-model="email"
-    label="Email"
-    :rules="emailRules"
-    :validate-on="['blur', 'input']"
-  />
-</template>
-
-<script setup>
-const email = ref('')
-
-const emailRules = [
-  { required: true, message: 'Email is required' },
-  {
-    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Please enter a valid email address'
-  }
-]
-</script>
-```
-
-### Async Validation
+All common components integrate with the Vuetify theme system:
 
 ```vue
 <script setup>
-const username = ref('')
-const checkingUsername = ref(false)
-const usernameError = ref('')
+// Access theme settings
+const { isDarkMode } = useSettingsStore()
 
-const validateUsername = async (username) => {
-  if (!username) return
+// Components automatically adapt to theme changes
+</script>
 
-  checkingUsername.value = true
-
-  try {
-    const response = await $fetch(`/api/users/check-username`, {
-      method: 'POST',
-      body: { username }
-    })
-
-    if (!response.available) {
-      usernameError.value = 'Username is already taken'
-    } else {
-      usernameError.value = ''
-    }
-  } catch (error) {
-    usernameError.value = 'Error checking username availability'
-  } finally {
-    checkingUsername.value = false
-  }
+<style>
+/* Custom theme integration */
+.common-component {
+  color: rgb(var(--v-theme-on-surface));
+  background: rgb(var(--v-theme-surface));
 }
 
-watch(username, (newValue) => {
-  if (newValue) {
-    validateUsername(newValue)
-  }
-})
-</script>
-```
-
-## Performance Considerations
-
-### Lazy Loading
-
-```vue
-<script setup>
-const showAdvancedForm = ref(false)
-
-const loadAdvancedComponents = async () => {
-  showAdvancedForm.value = false
-
-  // Lazy load heavy components
-  const { AdvancedForm } = await import('~/components/forms/AdvancedForm.vue')
-
-  showAdvancedForm.value = true
+/* Dark mode specific styles */
+[data-theme="dark"] .common-component {
+  border-color: rgb(var(--v-theme-outline));
 }
-</script>
-```
-
-### Component Memoization
-
-```vue
-<script setup>
-const expensiveOptions = computed(() => {
-  // Expensive calculation
-  return generateOptions()
-})
-</script>
-
-<template>
-  <Select
-    :options="expensiveOptions"
-    placeholder="Select an option"
-  />
-</template>
-```
-
-## Integration Examples
-
-### With Form Libraries
-
-```vue
-<!-- Using @vueuse/form -->
-<script setup>
-import { useForm } from '@vueuse/form'
-
-const form = useForm({
-  email: '',
-  password: ''
-})
-
-const submitForm = async () => {
-  try {
-    await $fetch('/api/login', {
-      method: 'POST',
-      body: form.data
-    })
-  } catch (error) {
-    form.setErrors(error.response?.data?.errors || {})
-  }
-}
-</script>
-```
-
-### With Validation Libraries
-
-```vue
-<!-- Using yup or zod -->
-<script setup>
-import { object, string } from 'yup'
-
-const schema = object({
-  email: string().email().required(),
-  password: string().min(8).required()
-})
-
-const validateForm = async () => {
-  try {
-    await schema.validate(form.data)
-    // Form is valid
-  } catch (error) {
-    // Handle validation errors
-  }
-}
-</script>
+</style>
 ```
 
 ## Best Practices
 
-### Component Usage
-
-1. **Use semantic HTML** when possible
-2. **Provide meaningful labels** for all inputs
-3. **Group related components** logically
-4. **Use consistent naming** conventions
-5. **Handle loading and error states**
-
-### Styling
-
-1. **Use CSS custom properties** for theming
-2. **Avoid inline styles** when possible
-3. **Follow design system** guidelines
-4. **Test in both light and dark modes**
-5. **Ensure responsive design**
-
 ### Performance
 
-1. **Lazy load** non-critical components
-2. **Memoize** expensive computations
-3. **Use proper key props** in lists
-4. **Avoid deep nesting** when possible
-5. **Optimize re-renders** with proper state management
+1. **Use LoadingScreen** only for full-page loads
+2. **Prefer ProgressBar** for smaller operations
+3. **Lazy load** toast and error components
+4. **Minimize re-renders** with proper state management
+
+### User Experience
+
+1. **Provide clear feedback** for all operations
+2. **Use appropriate toast types** for different messages
+3. **Include retry options** for failed operations
+4. **Test error states** in development
+
+### Accessibility
+
+1. **Toast notifications** are announced to screen readers
+2. **Error boundaries** provide accessible error messages
+3. **All components** support keyboard navigation
+4. **Loading states** indicate progress clearly
+
+## Integration Examples
+
+### Global Setup
+
+```vue
+<!-- In app.vue or layout -->
+<template>
+  <div id="app">
+    <!-- Always present components -->
+    <CommonToastContainer />
+    <CommonProgressBar :is-loading="globalLoading" />
+
+    <!-- Page content -->
+    <NuxtPage />
+  </div>
+</template>
+
+<script setup>
+// Global error handling
+const { $errorHandler } = useNuxtApp()
+
+onMounted(() => {
+  // Set up global error boundaries
+  if ($errorHandler) {
+    $errorHandler.setGlobalBoundary(ErrorBoundary)
+  }
+})
+</script>
+```
+
+### In Pages
+
+```vue
+<template>
+  <div class="page">
+    <!-- Page-specific error boundary -->
+    <CommonErrorBoundary title="Failed to load dashboard">
+      <DashboardContent />
+    </CommonErrorBoundary>
+  </div>
+</template>
+
+<script setup>
+const { showToast } = useToast()
+
+// Show success message
+const handleSave = async () => {
+  try {
+    await saveData()
+    showToast({
+      type: 'success',
+      message: 'Dashboard saved successfully'
+    })
+  } catch (error) {
+    showToast({
+      type: 'error',
+      message: 'Failed to save dashboard'
+    })
+  }
+}
+</script>
+```
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Components not rendering:**
-- Check if components are properly imported/registered
-- Verify prop names and types
-- Check browser console for errors
+**Toast notifications not showing:**
+- Check if ToastContainer is mounted in your app
+- Verify useToast composable is properly initialized
+- Check browser console for JavaScript errors
 
-**Styling issues:**
-- Ensure CSS custom properties are defined
-- Check for CSS specificity conflicts
-- Verify theme configuration
+**Error boundary not catching errors:**
+- Ensure ErrorBoundary wraps the failing component
+- Check if onError prop is properly handled
+- Verify error is thrown, not just logged
 
-**Form validation not working:**
-- Check validation rule syntax
-- Verify event handling
-- Test with simple validation first
+**LoadingScreen not responsive:**
+- Check CSS media queries
+- Verify viewport meta tag is set
+- Test on actual devices
 
-## Contributing
+**Logo not switching themes:**
+- Verify theme store is properly configured
+- Check image paths in public directory
+- Confirm Logo component is using the right props
 
-Help improve the common components:
+## Next Steps
 
-1. **Report bugs** and issues
-2. **Suggest new components** or features
-3. **Improve accessibility** and usability
-4. **Add comprehensive tests**
-5. **Update documentation** with examples
-
-## Resources
-
-- **[Vue 3 Documentation](https://vuejs.org/)**
-- **[Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)**
-- **[Form Design Best Practices](https://www.nngroup.com/articles/web-form-design/)**
-- **[Component Design Patterns](https://www.patterns.dev/)**
-
----
-
-**Next**: Explore **[Dashboard Components](../dashboard)** for data visualization and **[Theme Components](../theme)** for styling options.
+- **[Toast Service Documentation](../../services/toast)** - Toast system implementation
+- **[Error Handler Documentation](../../services/error-handler)** - Global error handling
+- **[Theme System Documentation](../theme)** - Theme integration
+- **[Dashboard Components](../dashboard)** - Dashboard-specific components
