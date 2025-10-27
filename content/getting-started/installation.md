@@ -24,30 +24,34 @@ This guide covers detailed installation options for God Panel.
 
 ## Installation Methods
 
-### Method 1: Official Template (Recommended)
+### Method 1: Clone the Repository (Recommended)
 
 ```bash
-# Using npm
-npm create nuxt@latest god-panel-project --template god-panel
-
-# Using yarn
-yarn create nuxt god-panel-project --template god-panel
-
-# Using pnpm
-pnpm create nuxt god-panel-project --template god-panel
-```
-
-### Method 2: GitHub Template
-
-```bash
-# Clone the template repository
-git clone https://github.com/your-org/god-panel-template.git my-project
-cd my-project
+# Clone the God Panel Nuxt application
+git clone https://github.com/your-org/god-panel.git
+cd god-panel/god-panel-nuxt
 
 # Install dependencies
 npm install
 
-# Start development
+# Start development server (runs on port 3333)
+npm run dev
+```
+
+### Method 2: Create from Scratch
+
+If you prefer to start fresh:
+
+```bash
+# Create a new Nuxt project
+npx nuxi@latest init god-panel-project
+cd god-panel-project
+
+# Install required modules
+npm install @nuxtjs/tailwindcss @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n vuetify @mdi/font @mdi/js
+
+# Install additional dependencies
+npm install axios zod vue-tsc
 npm run dev
 ```
 

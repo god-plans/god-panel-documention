@@ -19,135 +19,164 @@ Before you begin, make sure you have:
 
 ## Installation
 
-### Option 1: Create from Template
+### Option 1: Clone the Repository
 
-The fastest way to get started is using our official template:
+The fastest way to get started is using the complete God Panel project:
 
 ```bash
-# Using npm
-npm create nuxt@latest god-panel-project
+# Clone the repository
+git clone https://github.com/your-org/god-panel.git
+cd god-panel/god-panel-nuxt
 
-# Using yarn
-yarn create nuxt god-panel-project
+# Install dependencies
+npm install
 
-# Using pnpm
-pnpm create nuxt god-panel-project
+# Start development server (runs on port 3333)
+npm run dev
+
+# Open your browser to http://localhost:3333
 ```
 
-### Option 2: Manual Setup
+### Option 2: Create from Template
 
-If you prefer to start from scratch:
+If you want to start fresh with Nuxt 3 and add God Panel features:
 
 ```bash
 # Create a new Nuxt project
 npx nuxi@latest init god-panel-project
 cd god-panel-project
 
-# Install God Panel dependencies
-npm install @nuxtjs/tailwindcss @nuxtjs/vuetify
-npm install @nuxt/content vue-router
+# Install required modules
+npm install @nuxtjs/tailwindcss @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n vuetify @mdi/font @mdi/js
 
-# Install additional UI dependencies
+# Install additional dependencies
+npm install axios zod vue-tsc
 npm install @mdi/js
 ```
 
 ## Project Structure
 
-After installation, your project will have the following structure:
+The God Panel Nuxt application has the following structure:
 
 ```
-god-panel-project/
+god-panel-nuxt/
 ├── app/
-│   ├── assets/
-│   │   └── css/
-│   │       └── main.css
-│   ├── components/
-│   │   ├── auth/
-│   │   ├── common/
-│   │   ├── dashboard/
-│   │   └── settings/
-│   ├── layouts/
-│   ├── pages/
-│   ├── composables/
-│   ├── middleware/
-│   ├── plugins/
-│   ├── stores/
-│   └── utils/
-├── content/              # Documentation content (if using content module)
-├── public/
-├── nuxt.config.ts
+│   ├── assets/css/           # Global styles and Tailwind
+│   ├── components/           # Vue components
+│   │   ├── auth/            # Authentication components
+│   │   ├── common/          # Reusable UI components
+│   │   ├── dashboard/       # Dashboard navigation
+│   │   ├── settings/        # Settings drawer components
+│   │   └── theme/           # Theme-related components
+│   ├── composables/         # Vue composables
+│   ├── layouts/             # Page layouts
+│   ├── middleware/          # Route middleware
+│   ├── pages/               # File-based routing
+│   ├── plugins/             # Nuxt plugins
+│   ├── services/            # Business logic services
+│   ├── stores/              # Pinia stores
+│   ├── theme/               # Theme configuration
+│   └── utils/               # Utility functions
+├── assets/                  # Static assets
+├── i18n/                    # Internationalization files
+├── public/                  # Public static files
+├── nuxt.config.ts           # Nuxt configuration
 ├── package.json
-└── README.md
+└── tailwind.config.js       # Tailwind CSS configuration
 ```
 
 ## Configuration
 
-### Basic Configuration
+### Nuxt Configuration
 
-Update your `nuxt.config.ts` file:
+The `nuxt.config.ts` file is already configured with all necessary modules:
 
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  // Site configuration
-  site: {
-    url: 'https://your-domain.com',
-    name: 'Your Admin Panel'
+  // Development server configuration
+  devServer: {
+    port: 3333, // Runs on port 3333 instead of 3000
   },
-
-  // CSS framework
-  css: ['~/assets/css/main.css'],
 
   // Modules
   modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/content' // For documentation
+    '@nuxtjs/tailwindcss',    // CSS framework
+    '@pinia/nuxt',            // State management
+    '@nuxtjs/color-mode',     // Dark/light theme
+    '@nuxtjs/i18n',           // Internationalization
+  ],
+
+  // CSS configuration
+  css: [
+    '~/assets/css/main.css',
+    'vuetify/lib/styles/main.sass',  // Vuetify styles
+    '@mdi/font/css/materialdesignicons.min.css' // Material Design icons
   ],
 
   // Runtime configuration
   runtimeConfig: {
     public: {
-      siteName: 'God Panel',
-      siteDescription: 'Modern Admin Dashboard'
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
+      appName: 'God Panel',
+      version: '1.0.0',
+      enableMockData: process.env.ENABLE_MOCK_DATA === 'true'
     }
+  },
+
+  // i18n configuration for multi-language support
+  i18n: {
+    locales: [
+      { code: 'en', language: 'en-US' },
+      { code: 'fa', language: 'fa-IR', dir: 'rtl' }
+    ],
+    defaultLocale: 'en'
   }
 })
 ```
 
 ### Environment Variables
 
-Create a `.env` file for configuration:
+Create a `.env` file in the root directory:
 
 ```env
 # API Configuration
-API_BASE_URL=https://api.your-domain.com
-API_KEY=your_api_key_here
+NUXT_PUBLIC_API_URL=http://localhost:4000
+API_TIMEOUT=10000
 
-# Authentication
-JWT_SECRET=your_jwt_secret_here
+# Authentication (if using real backend)
+JWT_SECRET=your-secret-key
+REFRESH_TOKEN_EXPIRY=7d
 
-# Database
-DATABASE_URL=your_database_connection_string
+# Feature Flags
+ENABLE_MOCK_DATA=true
+ENABLE_API_LOGGING=false
 
 # Application
 NODE_ENV=development
 ```
 
-## Running the Development Server
+## Running the Application
 
-Start the development server:
+### Development Mode
 
 ```bash
-# Development
+# Start the development server
 npm run dev
 
 # The application will be available at:
-# http://localhost:3000
+# http://localhost:3333
+
+# Features available in development:
+# - Hot module replacement (HMR)
+# - TypeScript checking
+# - Auto-imports for components and composables
+# - Vuetify theme system
 ```
 
-## Building for Production
+### Production Build
 
 ```bash
 # Build for production
@@ -156,19 +185,310 @@ npm run build
 # Preview the production build
 npm run preview
 
-# Generate static files (if using static generation)
+# Generate static files (for static deployment)
 npm run generate
+```
+
+### Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run generate     # Generate static files
+npm run typecheck    # TypeScript type checking
+npm run lint         # ESLint code linting
+npm run lint:fix     # Auto-fix linting issues
+```
+
+## Authentication & Login
+
+### Demo Login
+
+The application includes a demo authentication system for development:
+
+**Demo Credentials:**
+- **Email:** `godpanel@test.com`
+- **Password:** `god123`
+
+```typescript
+// In development, you can use demo login
+const loginResult = await authStore.login({
+  email: 'godpanel@test.com',
+  password: 'god123'
+})
+```
+
+### Real Authentication Setup
+
+To implement real authentication:
+
+1. **Update the Auth Store** (`app/stores/auth.ts`):
+```typescript
+const login = async (credentials: { email: string; password: string }) => {
+  try {
+    const response = await $axios.post('/auth/login', credentials)
+    const { user, accessToken } = response.data
+
+    // Store user data and token
+    user.value = { ...userSchema.parse(user), accessToken }
+    localStorage.setItem('auth-token', accessToken)
+
+    return { success: true }
+  } catch (error) {
+    return { success: false, error: error.message }
+  }
+}
+```
+
+2. **Add Login Form** in `app/pages/auth/login.vue`:
+```vue
+<template>
+  <AuthMain>
+    <AuthContent>
+      <v-form @submit="handleLogin">
+        <v-text-field
+          v-model="credentials.email"
+          label="Email"
+          type="email"
+          required
+        />
+        <v-text-field
+          v-model="credentials.password"
+          label="Password"
+          type="password"
+          required
+        />
+        <v-btn type="submit" color="primary" block>
+          Sign In
+        </v-btn>
+      </v-form>
+    </AuthContent>
+  </AuthMain>
+</template>
+```
+
+3. **Configure API Client** to handle authentication automatically.
+
+## Navigation Setup
+
+### Route Configuration
+
+God Panel uses **file-based routing** with Nuxt 3. Pages are automatically created from files in the `app/pages/` directory:
+
+```
+app/pages/
+├── index.vue              # Home page (/)
+├── auth/
+│   └── login.vue         # Login page (/auth/login)
+└── dashboard/
+    ├── index.vue         # Dashboard home (/dashboard)
+    ├── analytics/        # Analytics page (/dashboard/analytics)
+    ├── settings/         # Settings page (/dashboard/settings)
+    └── toast-demo.vue    # Toast demo page (/dashboard/toast-demo)
+```
+
+### Sidebar Navigation
+
+Navigation is configured in `app/utils/routes.ts`:
+
+```typescript
+export const dashboardNavItems: NavItem[] = [
+  {
+    key: 'dashboard',
+    title: 'common.dashboard',
+    path: '/dashboard',
+    icon: 'mdi-view-dashboard'
+  },
+  {
+    key: 'analytics',
+    title: 'common.analytics',
+    path: '/dashboard/analytics',
+    icon: 'mdi-chart-line'
+  },
+  {
+    key: 'settings',
+    title: 'common.settings',
+    path: '/dashboard/settings',
+    icon: 'mdi-cog'
+  }
+]
+```
+
+### Adding New Navigation Items
+
+1. **Create a new page** in `app/pages/`:
+```vue
+<!-- app/pages/dashboard/users.vue -->
+<template>
+  <div>
+    <h1>User Management</h1>
+    <!-- Your user management content -->
+  </div>
+</template>
+```
+
+2. **Add to navigation** in `app/utils/routes.ts`:
+```typescript
+export const dashboardNavItems: NavItem[] = [
+  // ... existing items
+  {
+    key: 'users',
+    title: 'common.users',
+    path: '/dashboard/users',
+    icon: 'mdi-account-group'
+  }
+]
+```
+
+3. **Add translation key** for the title in your i18n files.
+
+### Protected Routes
+
+Use middleware to protect routes:
+
+```typescript
+<!-- app/middleware/auth.ts -->
+export default defineNuxtRouteMiddleware((to, from) => {
+  const authStore = useAuthStore()
+
+  if (!authStore.isAuthenticated && !authStore.loading) {
+    return navigateTo('/auth/login')
+  }
+})
+```
+
+Apply to protected pages:
+```vue
+<!-- app/pages/dashboard/settings.vue -->
+<script setup>
+definePageMeta({
+  middleware: 'auth'
+})
+</script>
+```
+
+## Theme Customization
+
+### Changing Colors
+
+God Panel uses a sophisticated theme system with preset colors. To change colors:
+
+1. **Update Settings Store** (`app/stores/settings.ts`):
+```typescript
+const defaultSettings: Settings = {
+  colorScheme: 'light',
+  primaryColor: 'cyan', // Change from 'default' to 'cyan', 'purple', 'blue', etc.
+  // ... other settings
+}
+```
+
+2. **Available Color Presets:**
+```typescript
+// Available in the settings drawer
+const colorPresets = [
+  { name: 'Default', value: '#00A76F', key: 'default' },    // Green
+  { name: 'Cyan', value: '#078DEE', key: 'cyan' },         // Blue
+  { name: 'Purple', value: '#7635dc', key: 'purple' },     // Purple
+  { name: 'Blue', value: '#0C68E9', key: 'blue' },         // Blue
+  { name: 'Orange', value: '#fda92d', key: 'orange' },     // Orange
+  { name: 'Red', value: '#FF3030', key: 'red' }           // Red
+]
+```
+
+3. **Custom Colors** in `app/theme/core/colors.json`:
+```json
+{
+  "primary": {
+    "lighter": "#C8FAD6",
+    "light": "#5BE49B",
+    "main": "#00A76F",        // Change this main color
+    "dark": "#007867",
+    "darker": "#004B50",
+    "contrastText": "#FFFFFF"
+  }
+}
+```
+
+### Using the Settings Panel
+
+1. **Access Settings:** Click the settings button in the dashboard header
+2. **Choose Color:** Select from preset colors in the settings drawer
+3. **Apply Changes:** Colors are applied immediately and persisted
+
+### Advanced Theme Customization
+
+For custom themes, update the Vuetify theme in `app/theme/vuetify-config.js`:
+
+```typescript
+// Custom theme configuration
+const customTheme = {
+  colors: {
+    primary: '#your-primary-color',
+    secondary: '#your-secondary-color',
+    accent: '#your-accent-color',
+    // ... other colors
+  }
+}
+```
+
+## Services Integration
+
+### API Client Service
+
+The application includes a powerful API client service:
+
+```typescript
+// Use the API client service
+import { apiClient } from '~/services/api-client'
+
+// Make API calls with automatic error handling
+const users = await apiClient.get('/api/users')
+const newUser = await apiClient.post('/api/users', userData)
+
+// Features:
+// - Automatic authentication token injection
+// - Request caching and deduplication
+// - Retry logic with exponential backoff
+// - Error handling and logging
+```
+
+### Toast Service
+
+Display notifications to users:
+
+```typescript
+// Use toast notifications
+import { toastService } from '~/services/toast'
+
+toastService.success('Data saved successfully!')
+toastService.error('Failed to save data')
+toastService.warning('Please check your input')
+```
+
+### Logger Service
+
+Log application events and errors:
+
+```typescript
+// Use the logger service
+import { logger } from '~/services/logger'
+
+logger.info('User logged in', { userId: '123' })
+logger.error('API request failed', { endpoint: '/api/users' })
+logger.time('Data export') // Timer for performance monitoring
 ```
 
 ## Next Steps
 
-Now that you have God Panel running, check out these guides:
+Now that you understand the God Panel structure:
 
-- **[Authentication Setup](./authentication)** - Configure user authentication
-- **[Theme Customization](./theme)** - Customize the appearance
-- **[Component Usage](./components)** - Learn about available components
-- **[Services Documentation](../services)** - API client, notifications, and logging
-- **[API Integration](./api)** - Connect to your backend
+- **[Services Documentation](../services)** - Learn about API client, notifications, and logging
+- **[Component Documentation](../components)** - Explore the component library
+- **[Theme Customization](../guides/theming)** - Customize appearance and colors
+- **[Authentication Guide](../guides/authentication)** - Set up user authentication
+
+**Ready to build?** Check out the **[Services Overview](../services)** to understand the core systems, then explore **[Component Documentation](../components)** to start building your interface!
 
 ## Troubleshooting
 
