@@ -1,154 +1,48 @@
 ---
-title: Settings Components
-description: Configuration and settings components for admin interfaces
+title: Settings Drawer Components
+description: Interactive settings panel for customizing dashboard appearance and behavior
 category: components
 order: 5
 ---
 
-# Settings Components
+# Settings Drawer Components
 
-God Panel's settings components provide a complete solution for building configuration interfaces. These components handle user preferences, application settings, and system configuration with a consistent and user-friendly approach.
+God Panel's settings drawer provides a comprehensive interface for customizing the dashboard appearance, layout, and behavior. This slide-out panel allows users to quickly adjust theme settings, navigation preferences, and visual customizations without leaving the current page.
 
-## Component Categories
+## Component Overview
 
-### ⚙️ Configuration
-- **SettingsForm**: General application settings
-- **UserPreferences**: User-specific settings
-- **SystemConfig**: System-level configuration
-- **ProfileSettings**: User profile management
+### 🎛️ Settings Drawer System
+- **SettingsDrawer**: Main settings panel with backdrop and header
+- **BaseOption**: Individual toggle options with icons and switches
+- **FontOptions**: Font family selection grid
+- **FullscreenButton**: Fullscreen toggle with state management
+- **LayoutOption**: Visual layout preview components
+- **NavOptions**: Navigation layout configuration
+- **PresetsOptions**: Color theme preset selection
 
-### 🎛️ Controls
-- **ToggleSwitch**: Boolean settings
-- **SelectField**: Dropdown configurations
-- **ColorPicker**: Theme color selection
-- **FileUpload**: Configuration file uploads
+## SettingsDrawer Component
 
-### 📝 Forms
-- **FormBuilder**: Dynamic form generation
-- **ValidationRules**: Setting validation
-- **FormPreview**: Configuration preview
-
-## SettingsForm Component
-
-Main component for handling application settings with validation and persistence.
+The main settings panel that slides in from the right side of the screen.
 
 ```vue
 <template>
-  <SettingsForm
-    :settings="settings"
-    :schema="settingsSchema"
-    @save="handleSave"
+  <!-- Settings drawer is controlled by the settings store -->
+  <SettingsDrawer
+    :hide-font="true"
+    :hide-presets="false"
+    :hide-compact="false"
     @reset="handleReset"
-    @validate="handleValidation"
-  >
-    <!-- General Settings -->
-    <SettingsSection title="General" icon="settings">
-      <Input
-        v-model="settings.siteName"
-        label="Site Name"
-        placeholder="My Application"
-      />
-
-      <Textarea
-        v-model="settings.description"
-        label="Description"
-        placeholder="Application description"
-        rows="3"
-      />
-
-      <Select
-        v-model="settings.language"
-        label="Default Language"
-        :options="languageOptions"
-      />
-    </SettingsSection>
-
-    <!-- Email Settings -->
-    <SettingsSection title="Email" icon="mail">
-      <Input
-        v-model="settings.smtpHost"
-        label="SMTP Host"
-        placeholder="smtp.example.com"
-      />
-
-      <Input
-        v-model="settings.smtpPort"
-        label="SMTP Port"
-        type="number"
-        placeholder="587"
-      />
-
-      <Checkbox
-        v-model="settings.smtpTls"
-        label="Use TLS encryption"
-      />
-    </SettingsSection>
-
-    <!-- Advanced Settings -->
-    <SettingsSection title="Advanced" icon="code">
-      <ToggleSwitch
-        v-model="settings.debugMode"
-        label="Debug Mode"
-        description="Enable debug logging and error reporting"
-      />
-
-      <ToggleSwitch
-        v-model="settings.maintenanceMode"
-        label="Maintenance Mode"
-        description="Put the application in maintenance mode"
-        variant="warning"
-      />
-    </SettingsSection>
-  </SettingsForm>
+  />
 </template>
 
 <script setup>
-const settings = ref({
-  siteName: 'God Panel',
-  description: 'Modern admin dashboard',
-  language: 'en',
-  smtpHost: '',
-  smtpPort: 587,
-  smtpTls: true,
-  debugMode: false,
-  maintenanceMode: false
-})
+import { useSettingsStore } from '~/stores/settings'
 
-const languageOptions = [
-  { label: 'English', value: 'en' },
-  { label: 'Spanish', value: 'es' },
-  { label: 'French', value: 'fr' },
-  { label: 'German', value: 'de' }
-]
-
-const settingsSchema = {
-  siteName: { required: true, minLength: 2 },
-  description: { required: true, maxLength: 500 },
-  language: { required: true },
-  smtpHost: { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ },
-  smtpPort: { type: 'number', min: 1, max: 65535 }
-}
-
-const handleSave = async (formData) => {
-  try {
-    await $fetch('/api/settings', {
-      method: 'PUT',
-      body: formData
-    })
-    // Show success message
-  } catch (error) {
-    // Handle error
-  }
-}
+const settingsStore = useSettingsStore()
 
 const handleReset = () => {
-  // Reset to default values
-  Object.assign(settings.value, defaultSettings)
-}
-
-const handleValidation = (errors) => {
-  // Handle validation errors
-  console.log('Validation errors:', errors)
+  // Settings reset to defaults
+  console.log('Settings reset to defaults')
 }
 </script>
 ```
@@ -157,99 +51,90 @@ const handleValidation = (errors) => {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `settings` | object | {} | Current settings values |
-| `schema` | object | {} | Validation schema |
-| `loading` | boolean | false | Show loading state |
-| `disabled` | boolean | false | Disable form editing |
+| `hideFont` | boolean | `false` | Hide font selection section |
+| `hideCompact` | boolean | `false` | Hide compact layout option |
+| `hidePresets` | boolean | `false` | Hide color presets section |
+| `hideNavColor` | boolean | `false` | Hide navigation color options |
+| `hideContrast` | boolean | `false` | Hide high contrast option |
+| `hideNavLayout` | boolean | `false` | Hide navigation layout options |
+| `hideDirection` | boolean | `false` | Hide RTL direction option |
+| `hideColorScheme` | boolean | `false` | Hide dark/light mode option |
 
-### Events
+### Features
 
-| Event | Payload | Description |
-|-------|---------|-------------|
-| `save` | form data | Settings saved successfully |
-| `reset` | - | Settings reset to defaults |
-| `validate` | errors | Validation completed |
+- **Backdrop Blur**: Semi-transparent backdrop with blur effect
+- **Auto-close**: Closes when clicking outside or pressing Escape
+- **Reset Functionality**: Reset button to restore default settings
+- **Fullscreen Toggle**: Quick fullscreen mode access
+- **Responsive Design**: Adapts to different screen sizes
+- **RTL Support**: Right-to-left layout support
 
-## SettingsSection Component
+## BaseOption Component
 
-Organize settings into collapsible sections.
-
-```vue
-<template>
-  <SettingsSection
-    title="Notifications"
-    icon="bell"
-    :collapsible="true"
-    :default-open="true"
-  >
-    <div class="space-y-4">
-      <ToggleSwitch
-        v-model="settings.emailNotifications"
-        label="Email Notifications"
-        description="Receive email notifications"
-      />
-
-      <ToggleSwitch
-        v-model="settings.pushNotifications"
-        label="Push Notifications"
-        description="Receive push notifications"
-      />
-
-      <ToggleSwitch
-        v-model="settings.smsNotifications"
-        label="SMS Notifications"
-        description="Receive SMS notifications"
-      />
-    </div>
-  </SettingsSection>
-</template>
-```
-
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `title` | string | - | Section title |
-| `icon` | string | - | Section icon |
-| `collapsible` | boolean | false | Make section collapsible |
-| `default-open` | boolean | true | Default open state |
-
-## ToggleSwitch Component
-
-Boolean settings with toggle controls.
+Individual toggle options with icons, labels, and switch controls.
 
 ```vue
 <template>
-  <div class="space-y-4">
-    <!-- Basic toggle -->
-    <ToggleSwitch
-      v-model="featureEnabled"
-      label="Enable Feature"
-      description="Turn this feature on or off"
-    />
+  <!-- Theme toggle -->
+  <BaseOption
+    icon="moon"
+    label="Dark Mode"
+    tooltip="Toggle dark/light theme"
+    :selected="isDarkMode"
+    @click="toggleTheme"
+  />
 
-    <!-- With custom styling -->
-    <ToggleSwitch
-      v-model="darkMode"
-      label="Dark Mode"
-      description="Use dark theme"
-      variant="theme"
-    />
+  <!-- High contrast -->
+  <BaseOption
+    icon="contrast"
+    label="High Contrast"
+    tooltip="Increase contrast for better visibility"
+    :selected="highContrast"
+    @click="toggleContrast"
+  />
 
-    <!-- Disabled state -->
-    <ToggleSwitch
-      v-model="experimentalFeature"
-      label="Experimental Feature"
-      description="This feature is experimental"
-      disabled
-    />
-  </div>
+  <!-- RTL support -->
+  <BaseOption
+    icon="align-right"
+    label="RTL Mode"
+    tooltip="Right-to-left text direction"
+    :selected="isRTL"
+    @click="toggleRTL"
+  />
+
+  <!-- Compact layout -->
+  <BaseOption
+    icon="autofit-width"
+    label="Compact Layout"
+    tooltip="Reduce spacing and padding"
+    :selected="compactMode"
+    @click="toggleCompact"
+  />
 </template>
 
 <script setup>
-const featureEnabled = ref(true)
-const darkMode = ref(false)
-const experimentalFeature = ref(false)
+import { useSettingsStore } from '~/stores/settings'
+
+const settingsStore = useSettingsStore()
+
+const toggleTheme = () => {
+  const newScheme = settingsStore.settings.colorScheme === 'light' ? 'dark' : 'light'
+  settingsStore.updateField('colorScheme', newScheme)
+}
+
+const toggleContrast = () => {
+  const newContrast = settingsStore.settings.contrast === 'default' ? 'high' : 'default'
+  settingsStore.updateField('contrast', newContrast)
+}
+
+const toggleRTL = () => {
+  const newDirection = settingsStore.settings.direction === 'ltr' ? 'rtl' : 'ltr'
+  settingsStore.updateField('direction', newDirection)
+}
+
+const toggleCompact = () => {
+  settingsStore.updateField('compactLayout', !settingsStore.settings.compactLayout)
+}
 </script>
 ```
 
@@ -257,71 +142,243 @@ const experimentalFeature = ref(false)
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | boolean | false | Toggle value (v-model) |
-| `label` | string | - | Toggle label |
-| `description` | string | - | Helper description |
-| `disabled` | boolean | false | Disable toggle |
-| `variant` | string | 'default' | Visual variant |
+| `icon` | string | - | Icon name (maps to Material Design icons) |
+| `label` | string | - | Option label text |
+| `selected` | boolean | `false` | Whether option is currently selected |
+| `tooltip` | string | - | Tooltip text on hover |
 
 ### Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `update:modelValue` | boolean | Value changed |
+| `click` | - | Emitted when option is clicked |
 
-## ColorPicker Component
+### Icon Mapping
 
-Theme color selection for customization.
+The component includes built-in icon mapping for common settings:
+
+| Icon Name | Material Design Icon | Description |
+|-----------|---------------------|-------------|
+| `moon` | `mdi-weather-night` | Dark mode toggle |
+| `contrast` | `mdi-contrast-circle` | High contrast mode |
+| `align-right` | `mdi-format-align-right` | RTL text direction |
+| `autofit-width` | `mdi-arrow-collapse-horizontal` | Compact layout |
+
+## FontOptions Component
+
+Font family selection with live preview and visual grid layout.
 
 ```vue
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Primary color -->
-    <ColorPicker
-      v-model="theme.primary"
-      label="Primary Color"
-      :presets="colorPresets"
-      show-alpha
-    />
+  <FontOptions
+    :value="currentFont"
+    :options="availableFonts"
+    @click-option="handleFontChange"
+  />
+</template>
 
-    <!-- Accent color -->
-    <ColorPicker
-      v-model="theme.accent"
-      label="Accent Color"
-      :presets="accentPresets"
-    />
+<script setup>
+import { useDynamicFonts } from '~/composables/useDynamicFonts'
 
-    <!-- Background color -->
-    <ColorPicker
-      v-model="theme.background"
-      label="Background Color"
-      :presets="backgroundPresets"
-      show-alpha
+const { getAvailableFonts } = useDynamicFonts()
+
+const currentFont = ref('Inter')
+const availableFonts = getAvailableFonts()
+
+const handleFontChange = (font: string) => {
+  currentFont.value = font
+  // Font is automatically loaded via useDynamicFonts composable
+}
+</script>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | string | - | Currently selected font family |
+| `options` | string[] | - | Array of available font options |
+
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `click-option` | string | Emitted when font option is selected |
+
+### Available Fonts
+
+The component supports these Google Fonts:
+
+- **Inter** (Modern, clean interface font)
+- **Roboto** (Google's design system font)
+- **Poppins** (Friendly, rounded font)
+- **Barlow** (Contemporary, geometric font)
+- **DM Sans** (Humanist, readable font)
+- **Nunito Sans** (Friendly, rounded font)
+
+### Features
+
+- **Live Preview**: Font names displayed in their actual font
+- **Visual Selection**: Grid layout with clear selection states
+- **Automatic Loading**: Integrates with `useDynamicFonts` composable
+- **Fallback Support**: Graceful fallback for font loading failures
+
+## FullscreenButton Component
+
+Quick fullscreen toggle button with state management.
+
+```vue
+<template>
+  <div class="header-actions">
+    <!-- Fullscreen button with tooltip -->
+    <FullscreenButton />
+
+    <!-- Reset button -->
+    <v-btn icon variant="text" @click="resetSettings">
+      <v-icon>mdi-restart</v-icon>
+    </v-btn>
+
+    <!-- Close button -->
+    <v-btn icon variant="text" @click="closeSettings">
+      <v-icon>mdi-close</v-icon>
+    </v-btn>
+  </div>
+</template>
+```
+
+### Features
+
+- **Auto-detection**: Automatically detects current fullscreen state
+- **Keyboard Support**: Responds to F11 and Escape keys
+- **Visual Feedback**: Icon changes based on fullscreen state
+- **Tooltip**: Shows appropriate tooltip text
+- **Smooth Animation**: Icon transition animations
+
+## LayoutOption Component
+
+Visual preview components for navigation layout options.
+
+```vue
+<template>
+  <div class="layout-options">
+    <LayoutOption
+      option="vertical"
+      :selected="currentLayout === 'vertical'"
+      @click="setLayout('vertical')"
+    />
+    <LayoutOption
+      option="horizontal"
+      :selected="currentLayout === 'horizontal'"
+      @click="setLayout('horizontal')"
+    />
+    <LayoutOption
+      option="mini"
+      :selected="currentLayout === 'mini'"
+      @click="setLayout('mini')"
     />
   </div>
 </template>
 
 <script setup>
-const theme = ref({
-  primary: '#3b82f6',
-  accent: '#10b981',
-  background: '#ffffff'
-})
+const currentLayout = ref('vertical')
+
+const setLayout = (layout: 'vertical' | 'horizontal' | 'mini') => {
+  currentLayout.value = layout
+  // Update settings store
+}
+</script>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `option` | `'vertical' \| 'horizontal' \| 'mini'` | - | Layout type to display |
+| `selected` | boolean | `false` | Whether this layout is currently selected |
+
+### Layout Types
+
+| Layout | Description | Use Case |
+|--------|-------------|----------|
+| **vertical** | Traditional sidebar navigation | Standard desktop layout |
+| **horizontal** | Top navigation bar | Mobile and compact layouts |
+| **mini** | Collapsed icon-only sidebar | Space-constrained environments |
+
+### Visual Design
+
+Each layout option shows a mini preview:
+
+```
+Vertical:   [Sidebar] [Content Area]
+Horizontal: [Top Nav Bar]
+            [Content Area]
+Mini:       [Icons] [Content Area]
+```
+
+## NavOptions Component
+
+Navigation layout configuration section with visual previews.
+
+```vue
+<template>
+  <NavOptions
+    :value="{ layout: currentNavLayout }"
+    :options="{ layouts: ['vertical', 'horizontal', 'mini'] }"
+    :tooltip="'Navigation layout affects sidebar behavior'"
+    @click-option="handleNavLayoutChange"
+  />
+</template>
+
+<script setup>
+const currentNavLayout = ref('vertical')
+
+const handleNavLayoutChange = (option: { layout?: string }) => {
+  if (option.layout) {
+    currentNavLayout.value = option.layout as 'vertical' | 'horizontal' | 'mini'
+  }
+}
+</script>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | object | - | Current navigation settings |
+| `options` | object | - | Available layout options |
+| `hideNavLayout` | boolean | `false` | Hide layout selection |
+| `hideNavColor` | boolean | `false` | Hide navigation color options |
+| `tooltip` | string | - | Tooltip text for the section |
+
+## PresetsOptions Component
+
+Color theme preset selection with visual color indicators.
+
+```vue
+<template>
+  <PresetsOptions
+    :value="currentPrimaryColor"
+    :options="colorPresets"
+    @click-option="handleColorChange"
+  />
+</template>
+
+<script setup>
+const currentPrimaryColor = ref('default')
 
 const colorPresets = [
-  '#3b82f6', '#ef4444', '#10b981', '#f59e0b',
-  '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'
+  { name: 'Default', value: '#00A76F', key: 'default' },
+  { name: 'Cyan', value: '#078DEE', key: 'cyan' },
+  { name: 'Purple', value: '#7635dc', key: 'purple' },
+  { name: 'Blue', value: '#0C68E9', key: 'blue' },
+  { name: 'Orange', value: '#fda92d', key: 'orange' },
+  { name: 'Red', value: '#FF3030', key: 'red' }
 ]
 
-const accentPresets = [
-  '#10b981', '#3b82f6', '#f59e0b', '#ef4444',
-  '#8b5cf6', '#ec4899', '#06b6d4', '#64748b'
-]
-
-const backgroundPresets = [
-  '#ffffff', '#f8fafc', '#f1f5f9', '#e2e8f0',
-  '#1e293b', '#0f172a', '#18181b', '#27272a'
-]
+const handleColorChange = (colorKey: string) => {
+  currentPrimaryColor.value = colorKey
+  // Update theme
+}
 </script>
 ```
 
@@ -329,370 +386,23 @@ const backgroundPresets = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | string | - | Color value (v-model) |
-| `label` | string | - | Color picker label |
-| `presets` | array | [] | Predefined color options |
-| `show-alpha` | boolean | false | Show alpha channel |
-| `format` | string | 'hex' | Color format |
+| `value` | string | - | Currently selected preset |
+| `options` | array | - | Array of preset options |
 
-## FormBuilder Component
+### Color Presets
 
-Dynamic form generation based on schema.
+| Preset | Color | Hex Code | Use Case |
+|--------|-------|----------|----------|
+| **Default** | Green | `#00A76F` | Professional, success-oriented |
+| **Cyan** | Blue | `#078DEE` | Tech, modern applications |
+| **Purple** | Purple | `#7635dc` | Creative, premium feel |
+| **Blue** | Blue | `#0C68E9` | Corporate, trustworthy |
+| **Orange** | Orange | `#fda92d` | Energetic, attention-grabbing |
+| **Red** | Red | `#FF3030` | Urgent, error states |
 
-```vue
-<template>
-  <FormBuilder
-    :schema="dynamicSchema"
-    :values="formValues"
-    @submit="handleSubmit"
-    @change="handleChange"
-  />
-</template>
+## Integration with Settings Store
 
-<script setup>
-const formValues = ref({})
-
-const dynamicSchema = {
-  name: {
-    type: 'text',
-    label: 'Full Name',
-    required: true,
-    placeholder: 'Enter your full name'
-  },
-  email: {
-    type: 'email',
-    label: 'Email Address',
-    required: true,
-    validation: {
-      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: 'Please enter a valid email'
-    }
-  },
-  role: {
-    type: 'select',
-    label: 'User Role',
-    required: true,
-    options: [
-      { label: 'Admin', value: 'admin' },
-      { label: 'Editor', value: 'editor' },
-      { label: 'Viewer', value: 'viewer' }
-    ]
-  },
-  notifications: {
-    type: 'checkbox',
-    label: 'Email Notifications',
-    description: 'Receive email updates'
-  },
-  bio: {
-    type: 'textarea',
-    label: 'Bio',
-    placeholder: 'Tell us about yourself',
-    rows: 4
-  }
-}
-
-const handleSubmit = async (values) => {
-  try {
-    await $fetch('/api/users', {
-      method: 'POST',
-      body: values
-    })
-    // Success handling
-  } catch (error) {
-    // Error handling
-  }
-}
-
-const handleChange = (field, value) => {
-  console.log(`Field ${field} changed to:`, value)
-}
-</script>
-```
-
-## Theming and Styling
-
-### Settings Theming
-
-```css
-/* Settings form theming */
-.settings-form {
-  --settings-bg: var(--color-white);
-  --settings-border: var(--color-gray-200);
-  --settings-text: var(--color-gray-900);
-  --settings-muted: var(--color-gray-500);
-  --settings-primary: var(--color-primary);
-}
-
-[data-theme="dark"] .settings-form {
-  --settings-bg: var(--color-gray-800);
-  --settings-border: var(--color-gray-700);
-  --settings-text: var(--color-gray-100);
-  --settings-muted: var(--color-gray-400);
-}
-
-/* Section styling */
-.settings-section {
-  background: var(--settings-bg);
-  border: 1px solid var(--settings-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-}
-
-.settings-section-header {
-  color: var(--settings-text);
-  font-weight: var(--font-semibold);
-  margin-bottom: var(--space-4);
-}
-```
-
-### Toggle Styling
-
-```css
-/* Toggle switch theming */
-.toggle-switch {
-  --toggle-bg: var(--color-gray-200);
-  --toggle-bg-active: var(--color-primary);
-  --toggle-knob: var(--color-white);
-  --toggle-border: var(--color-gray-300);
-}
-
-[data-theme="dark"] .toggle-switch {
-  --toggle-bg: var(--color-gray-700);
-  --toggle-border: var(--color-gray-600);
-}
-
-.toggle-switch--checked {
-  --toggle-bg: var(--toggle-bg-active);
-}
-
-.toggle-switch--disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-```
-
-## Validation and Error Handling
-
-### Built-in Validation
-
-```vue
-<script setup>
-const validationRules = {
-  email: [
-    { required: true, message: 'Email is required' },
-    {
-      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: 'Please enter a valid email address'
-    }
-  ],
-  password: [
-    { required: true, message: 'Password is required' },
-    { minLength: 8, message: 'Password must be at least 8 characters' },
-    {
-      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      message: 'Password must contain uppercase, lowercase, and number'
-    }
-  ],
-  confirmPassword: [
-    { required: true, message: 'Password confirmation is required' },
-    {
-      validator: (value, formData) => value === formData.password,
-      message: 'Passwords do not match'
-    }
-  ]
-}
-</script>
-```
-
-### Custom Validation
-
-```vue
-<template>
-  <SettingsForm
-    :settings="settings"
-    :custom-validators="customValidators"
-    @validate="handleCustomValidation"
-  />
-</template>
-
-<script setup>
-const customValidators = {
-  username: async (value) => {
-    if (!value) return 'Username is required'
-
-    try {
-      const response = await $fetch(`/api/users/check-username`, {
-        method: 'POST',
-        body: { username: value }
-      })
-
-      if (!response.available) {
-        return 'Username is already taken'
-      }
-
-      return true
-    } catch (error) {
-      return 'Error checking username availability'
-    }
-  }
-}
-
-const handleCustomValidation = (errors) => {
-  console.log('Custom validation errors:', errors)
-}
-</script>
-```
-
-## Persistence and Storage
-
-### Local Storage
-
-```vue
-<script setup>
-const settings = useLocalStorage('app-settings', defaultSettings)
-
-const saveSettings = () => {
-  // Settings are automatically saved to localStorage
-  console.log('Settings saved:', settings.value)
-}
-</script>
-```
-
-### API Persistence
-
-```vue
-<script setup>
-const settings = ref(defaultSettings)
-
-// Load settings from API
-onMounted(async () => {
-  try {
-    const savedSettings = await $fetch('/api/settings')
-    Object.assign(settings.value, savedSettings)
-  } catch (error) {
-    console.error('Failed to load settings:', error)
-  }
-})
-
-const saveSettings = async () => {
-  try {
-    await $fetch('/api/settings', {
-      method: 'PUT',
-      body: settings.value
-    })
-    // Show success message
-  } catch (error) {
-    // Show error message
-  }
-}
-</script>
-```
-
-## Advanced Features
-
-### Settings Import/Export
-
-```vue
-<template>
-  <div class="flex space-x-2">
-    <Button variant="secondary" @click="exportSettings">
-      Export Settings
-    </Button>
-    <Button variant="secondary" @click="importSettings">
-      Import Settings
-    </Button>
-  </div>
-</template>
-
-<script setup>
-const exportSettings = () => {
-  const settingsJson = JSON.stringify(settings.value, null, 2)
-  const blob = new Blob([settingsJson], { type: 'application/json' })
-  const url = URL.createObjectURL(blob)
-
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'settings.json'
-  link.click()
-
-  URL.revokeObjectURL(url)
-}
-
-const importSettings = () => {
-  const input = document.createElement('input')
-  input.type = 'file'
-  input.accept = '.json'
-
-  input.onchange = (event) => {
-    const file = event.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          const importedSettings = JSON.parse(e.target.result)
-          Object.assign(settings.value, importedSettings)
-          // Show success message
-        } catch (error) {
-          // Show error message
-        }
-      }
-      reader.readAsText(file)
-    }
-  }
-
-  input.click()
-}
-</script>
-```
-
-### Settings History
-
-```vue
-<template>
-  <div class="space-y-4">
-    <h3>Settings History</h3>
-    <div v-for="entry in settingsHistory" :key="entry.id" class="border rounded p-4">
-      <div class="flex justify-between items-start">
-        <div>
-          <div class="font-medium">{{ entry.description }}</div>
-          <div class="text-sm text-gray-500">{{ entry.timestamp }}</div>
-        </div>
-        <Button size="sm" variant="secondary" @click="revertTo(entry)">
-          Revert
-        </Button>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-const settingsHistory = ref([])
-
-const revertTo = (entry) => {
-  Object.assign(settings.value, entry.data)
-  // Save reverted settings
-}
-</script>
-```
-
-## Integration Examples
-
-### With Vue I18n
-
-```vue
-<script setup>
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
-
-const settings = computed(() => ({
-  siteName: t('settings.siteName'),
-  description: t('settings.description')
-}))
-</script>
-```
-
-### With Pinia Store
+All components integrate with the Pinia settings store:
 
 ```vue
 <script setup>
@@ -700,72 +410,332 @@ import { useSettingsStore } from '~/stores/settings'
 
 const settingsStore = useSettingsStore()
 
-const settings = computed(() => settingsStore.settings)
-const saveSettings = () => settingsStore.updateSettings(settings.value)
+// Components automatically sync with store
+// Settings are persisted and reactive across the app
+
+// Manual store updates
+const updateSetting = (field: string, value: any) => {
+  settingsStore.updateField(field, value)
+}
+
+const resetSettings = () => {
+  settingsStore.onReset()
+}
+</script>
+```
+
+## Usage in Components
+
+### Settings Button Integration
+
+```vue
+<template>
+  <div class="header-actions">
+    <!-- Settings button triggers the drawer -->
+    <SettingsButton @click="openSettings" />
+
+    <!-- Settings drawer -->
+    <SettingsDrawer />
+  </div>
+</template>
+
+<script setup>
+import { useSettingsStore } from '~/stores/settings'
+
+const settingsStore = useSettingsStore()
+
+const openSettings = () => {
+  settingsStore.onOpenDrawer()
+}
+</script>
+```
+
+### Layout Integration
+
+```vue
+<template>
+  <div class="app-layout">
+    <!-- Navigation adapts to settings -->
+    <DashboardNav :mini="settingsStore.settings.navLayout === 'mini'" />
+
+    <!-- Content area respects compact mode -->
+    <main :class="{ 'compact': settingsStore.settings.compactLayout }">
+      <slot />
+    </main>
+
+    <!-- Settings drawer -->
+    <SettingsDrawer />
+  </div>
+</template>
+```
+
+## Customization
+
+### Custom Color Presets
+
+```vue
+<script setup>
+const customPresets = [
+  { name: 'Brand Blue', value: '#1e40af', key: 'brand-blue' },
+  { name: 'Forest Green', value: '#059669', key: 'forest-green' },
+  { name: 'Sunset Orange', value: '#ea580c', key: 'sunset-orange' },
+  { name: 'Royal Purple', value: '#7c3aed', key: 'royal-purple' }
+]
+
+const handleCustomPreset = (preset: string) => {
+  // Apply custom preset logic
+}
+</script>
+```
+
+### Custom Option Sections
+
+```vue
+<template>
+  <SettingsDrawer>
+    <!-- Custom section -->
+    <div class="custom-settings-section">
+      <BaseOption
+        icon="custom-icon"
+        label="Custom Feature"
+        :selected="customEnabled"
+        @click="toggleCustom"
+      />
+    </div>
+  </SettingsDrawer>
+</template>
+```
+
+## Theme Integration
+
+All settings components respect the current theme:
+
+```css
+/* Light theme */
+.settings-drawer {
+  --drawer-bg: rgba(255, 255, 255, 0.9);
+  --drawer-text: rgb(33, 37, 41);
+  --drawer-border: rgba(33, 37, 41, 0.12);
+}
+
+/* Dark theme */
+[data-theme="dark"] .settings-drawer {
+  --drawer-bg: rgba(31, 41, 55, 0.9);
+  --drawer-text: rgb(249, 250, 251);
+  --drawer-border: rgba(249, 250, 251, 0.12);
+}
+```
+
+## Responsive Design
+
+The settings drawer adapts to different screen sizes:
+
+```css
+/* Desktop (≥ 960px) */
+.settings-drawer {
+  width: 360px;
+  max-width: 400px;
+}
+
+/* Mobile (< 960px) */
+@media (max-width: 959px) {
+  .settings-drawer {
+    width: 100vw;
+    max-width: none;
+  }
+}
+```
+
+## Accessibility Features
+
+### Keyboard Navigation
+
+- **Tab Navigation**: Full keyboard navigation support
+- **Enter/Space**: Activate buttons and options
+- **Escape**: Close settings drawer
+- **Arrow Keys**: Navigate between options
+
+### Screen Reader Support
+
+```vue
+<template>
+  <SettingsDrawer
+    aria-label="Application settings"
+    role="dialog"
+    aria-modal="true"
+  >
+    <BaseOption
+      :aria-label="`Toggle ${label}`"
+      role="button"
+      :aria-pressed="selected"
+    />
+  </SettingsDrawer>
+</template>
+```
+
+### ARIA Attributes
+
+- **aria-label**: Descriptive labels for all interactive elements
+- **aria-pressed**: Toggle state indication
+- **role**: Proper semantic roles for screen readers
+- **aria-modal**: Modal dialog behavior
+
+## Performance Considerations
+
+### Efficient Updates
+
+```vue
+<script setup>
+// Debounced settings updates
+const updateSetting = useDebounceFn((field: string, value: any) => {
+  settingsStore.updateField(field, value)
+}, 300)
+
+// Batch updates for better performance
+const batchUpdate = (updates: Record<string, any>) => {
+  settingsStore.batchUpdate(updates)
+}
+</script>
+```
+
+### Memory Management
+
+```vue
+<script setup>
+// Proper cleanup
+onUnmounted(() => {
+  // Clear any subscriptions or timers
+  clearInterval(updateInterval)
+})
 </script>
 ```
 
 ## Best Practices
 
+### Settings Organization
+
+1. **Group related settings** in logical sections
+2. **Provide visual feedback** for all changes
+3. **Include tooltips** for complex options
+4. **Show current state** clearly with visual indicators
+
 ### User Experience
 
-1. **Provide clear labels** and descriptions
-2. **Group related settings** logically
-3. **Show validation feedback** immediately
-4. **Offer reset functionality** for mistakes
-5. **Save automatically** when appropriate
+1. **Auto-save changes** for immediate feedback
+2. **Provide reset option** for easy recovery
+3. **Show loading states** for async operations
+4. **Validate input** before saving
 
 ### Performance
 
-1. **Debounce** rapid changes
-2. **Lazy load** complex components
-3. **Cache** settings data
-4. **Optimize** re-renders
-5. **Use virtual scrolling** for long lists
-
-### Security
-
-1. **Validate** all input on server
-2. **Sanitize** user input
-3. **Use secure storage** methods
-4. **Implement proper permissions**
-5. **Log setting changes** for audit
+1. **Debounce rapid changes** to avoid excessive updates
+2. **Use computed properties** for derived settings
+3. **Lazy load** complex sections when needed
+4. **Cache** expensive operations
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Settings not saving:**
-- Check API endpoints are accessible
-- Verify authentication is working
-- Check browser console for errors
+**Settings not persisting:**
+- Check if settings store is properly configured
+- Verify localStorage permissions
+- Check for JavaScript errors in console
 
-**Validation not working:**
-- Ensure validation schema is correct
-- Check if validation functions are async
-- Verify error handling
+**Options not responding:**
+- Ensure event handlers are properly bound
+- Check if settings store methods are working
+- Verify component props are correctly passed
 
 **Styling issues:**
-- Check CSS custom properties
+- Check CSS custom properties are defined
 - Verify theme configuration
-- Test in different browsers
+- Test in both light and dark modes
 
-## Contributing
+**Mobile layout problems:**
+- Check responsive CSS breakpoints
+- Verify drawer positioning for RTL
+- Test touch interactions on mobile devices
 
-Help improve settings components:
+## Integration Examples
 
-1. **Add new setting types**
-2. **Improve validation**
-3. **Enhance accessibility**
-4. **Add comprehensive tests**
-5. **Create example implementations**
+### Complete Settings Integration
 
-## Resources
+```vue
+<!-- In your dashboard layout -->
+<template>
+  <div class="dashboard">
+    <!-- Settings trigger button -->
+    <SettingsButton @click="openSettings" />
 
-- **[Form Design Patterns](https://www.lukew.com/ff/entry.asp?1502)**
-- **[Settings UI Best Practices](https://material.io/design/communication/settings.html)**
-- **[Accessibility Guidelines](https://www.w3.org/WAI/ARIA/apg/patterns/)**
+    <!-- Main settings drawer -->
+    <SettingsDrawer
+      :hide-font="false"
+      :hide-presets="false"
+      :hide-compact="false"
+      @reset="handleReset"
+    />
 
----
+    <!-- Settings are automatically applied -->
+    <DashboardNav :mini="settingsStore.settings.navLayout === 'mini'" />
+    <main :class="{ 'compact': settingsStore.settings.compactLayout }">
+      <slot />
+    </main>
+  </div>
+</template>
 
-**Next**: Explore **[Theme Components](../theme)** for visual customization and **[Component Overview](../overview)** for all available components.
+<script setup>
+import { useSettingsStore } from '~/stores/settings'
+
+const settingsStore = useSettingsStore()
+
+const openSettings = () => {
+  settingsStore.onOpenDrawer()
+}
+
+const handleReset = () => {
+  // Show confirmation dialog
+  if (confirm('Reset all settings to defaults?')) {
+    settingsStore.onReset()
+  }
+}
+</script>
+```
+
+### Custom Settings Section
+
+```vue
+<template>
+  <SettingsDrawer>
+    <!-- Custom notifications section -->
+    <div class="custom-section">
+      <div class="section-header">
+        <span>Notifications</span>
+      </div>
+
+      <BaseOption
+        icon="email"
+        label="Email Notifications"
+        :selected="emailNotifications"
+        @click="toggleEmailNotifications"
+      />
+
+      <BaseOption
+        icon="bell"
+        label="Push Notifications"
+        :selected="pushNotifications"
+        @click="togglePushNotifications"
+      />
+    </div>
+  </SettingsDrawer>
+</template>
+```
+
+## Next Steps
+
+- **[Theme Components Documentation](../theme)** - Theme system and customization
+- **[Settings Store Documentation](../../stores/settings)** - State management for settings
+- **[Logger Service Documentation](../../services/logger)** - Settings change logging
+- **[Dashboard Components Documentation](../dashboard)** - Navigation integration
+- **[Layout System Documentation](../layouts)** - Layout customization
+

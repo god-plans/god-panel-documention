@@ -576,6 +576,7 @@ const handleSave = async () => {
 ## Next Steps
 
 - **[Toast Service Documentation](../../services/toast)** - Toast system implementation
-- **[Error Handler Documentation](../../services/error-handler)** - Global error handling
+- **[Logger Service Documentation](../../services/logger)** - Logging and error handling
+- **[API Client Service Documentation](../../services/api-client)** - HTTP client for data fetching
 - **[Theme System Documentation](../theme)** - Theme integration
 - **[Dashboard Components](../dashboard)** - Dashboard-specific components

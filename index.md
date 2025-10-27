@@ -14,7 +14,10 @@ hero:
       text: Get Started
       link: /content/getting-started/index
     - theme: alt
-      text: View Components
+      text: View Services
+      link: /content/services/index
+    - theme: alt
+      text: Components
       link: /content/components/overview
     - theme: alt
       text: API Reference
@@ -27,15 +30,15 @@ features:
   - title: TypeScript Ready
     details: Full TypeScript support with comprehensive type definitions for all components, APIs, and configuration options.
     icon: 📝
+  - title: Service Layer
+    details: Powerful service architecture with API client, toast notifications, logging system, and error handling services.
+    icon: 🔧
   - title: Component Library
-    details: Extensive component library with 50+ reusable components including forms, tables, charts, and navigation elements.
+    details: Comprehensive component library including layout components, navigation, settings panels, and UI utilities.
     icon: 🧩
   - title: Theme System
     details: Flexible theming system with dark/light mode support, CSS custom properties, and easy customization options.
     icon: 🎨
-  - title: Authentication
-    details: Complete authentication system with JWT, social login, role-based permissions, and secure API endpoints.
-    icon: 🔐
   - title: Developer Experience
     details: Excellent DX with hot reload, auto-imports, composables, and comprehensive documentation with examples.
     icon: ⚡
@@ -104,20 +107,31 @@ Explore our comprehensive component library with detailed documentation and exam
 
 - [Component Overview](/content/components/overview)
 - [Authentication Components](/content/components/auth/index)
+- [Common Components](/content/components/common/index)
 - [Dashboard Components](/content/components/dashboard/index)
+- [Settings Components](/content/components/settings/index)
 - [Theme Components](/content/components/theme/index)
+
+### 🔧 Services
+Core services including API client, notifications, logging, and integration patterns.
+
+- [Services Overview](/content/services/index)
+- [API Client Service](/content/services/api-client)
+- [Toast Service](/content/services/toast)
+- [Logger Service](/content/services/logger)
 
 ### 🔌 API Reference
 Complete API documentation for backend integration and customization.
 
 - [API Overview](/content/api/index)
-- [Authentication Endpoints](#)
-- [User Management](#)
-- [Settings & Configuration](#)
+- [Authentication Endpoints](/content/api/index#authentication)
+- [User Management](/content/api/index#users)
+- [Settings & Configuration](/content/api/index#settings)
 
 ### 📖 Guides
 Step-by-step guides for common tasks and advanced features.
 
+- [Quick Start Guide](/content/guides/quick-start) ✨
 - [Authentication Setup](/content/guides/authentication)
 - [Theme Customization](/content/guides/theming)
 - [Internationalization (i18n)](/content/guides/i18n)
@@ -128,14 +142,13 @@ Real-world examples and code snippets to accelerate your development.
 
 - [Basic Usage Examples](/content/examples/basic-usage)
 - [Code Snippets](/content/examples/code-examples)
-- [Integration Patterns](#)
 
 ### 🤝 Contributing
 Learn how to contribute to the God Panel ecosystem.
 
 - [Contributing Guide](/content/contributing)
-- [Development Setup](#)
-- [Code Standards](#)
+- [Development Setup](/content/getting-started/installation#development-setup)
+- [Code Standards](/content/contributing#code-standards)
 
 </div>
 
@@ -164,21 +177,52 @@ Learn how to contribute to the God Panel ecosystem.
 
 ## 🛠 What's Included
 
-### Core Components
-- Authentication system (login, register, password reset)
-- Dashboard widgets and charts
-- Data tables with sorting and filtering
-- Form components with validation
-- Navigation and breadcrumbs
-- Modal and notification systems
+### ✅ Currently Available
+- **Layout Components**: Auth, Dashboard, and Navigation layouts
+- **Common UI Components**: Toast notifications, loading screens, error boundaries
+- **Settings System**: Comprehensive settings drawer with theme customization
+- **Service Architecture**: API client, toast service, and logger service
+- **Theme System**: Dark/light mode with CSS custom properties
+- **Responsive Design**: Mobile-first responsive components
+- **TypeScript Support**: Full type safety throughout
 
-### Advanced Features
-- Role-based access control (RBAC)
-- Multi-language support (i18n)
-- Dark/light theme switching
-- Responsive design
-- Accessibility compliance (WCAG 2.1)
-- Real-time updates
+### 🚧 Available for Integration
+- **Authentication System**: Layout components ready, backend integration needed
+- **User Management**: Service layer prepared, UI components can be added
+- **Dashboard Widgets**: Navigation and layout ready, widgets can be implemented
+- **Data Tables**: Base components available, specific tables can be built
+- **Form Validation**: Error handling ready, custom forms can be created
+- **Real-time Updates**: Logger service supports real-time logging, WebSocket integration possible
+
+### 🎯 Easy to Add
+- **Role-based Access Control (RBAC)**: Navigation supports permissions, store layer ready
+- **Multi-language Support (i18n)**: Already implemented in components, just needs translation files
+- **Chart Components**: Layout ready, Chart.js integration straightforward
+- **File Upload**: API client supports multipart uploads
+- **Advanced Analytics**: Dashboard layout ready for analytics widgets
+
+## 🤔 What's Ready vs What You Need to Add
+
+### ✅ **Ready to Use Right Now**
+- **Service Layer**: Complete API client, toast, and logger services
+- **Layout System**: Auth, dashboard, and responsive layouts
+- **Settings Panel**: Full customization interface with theme options
+- **Navigation**: Dashboard navigation with mobile support
+- **Documentation**: Comprehensive docs for all implemented features
+
+### 🏗️ **Framework Ready (Add Your Implementation)**
+- **Authentication**: Layout components ready, add your auth forms
+- **User Management**: Service layer ready, add user interface components
+- **Dashboard Widgets**: Layout ready, add your data visualization components
+- **Data Tables**: Base components ready, add your specific table implementations
+- **Forms**: Error handling ready, add your form fields and validation
+
+### 💡 **Easy Extensions**
+- **Charts**: Add Chart.js or similar for data visualization
+- **Real-time Updates**: WebSocket integration with existing logger service
+- **File Uploads**: API client supports multipart uploads
+- **Internationalization**: i18n already integrated, add translation files
+- **Custom Themes**: CSS custom properties system ready for extension
 
 ## 📞 Getting Help
 
@@ -207,17 +251,26 @@ Get priority support and professional services for your projects.
 
 Stay updated with our development plans and upcoming features.
 
-### Next Release (v2.1)
-- [ ] Enhanced chart components
-- [ ] Advanced data visualization
-- [ ] Improved accessibility features
-- [ ] Performance optimizations
+### ✅ Recently Added (Current Version)
+- [x] **Service Architecture**: API client, toast, and logger services
+- [x] **Settings Drawer**: Comprehensive customization panel
+- [x] **Component Documentation**: Complete component library docs
+- [x] **Navigation System**: Dashboard navigation with mobile support
+- [x] **Theme Integration**: Advanced theming with RTL support
 
-### Future Releases
-- [ ] Mobile app support
-- [ ] Advanced analytics dashboard
-- [ ] Third-party integrations
-- [ ] Advanced theming options
+### 🚧 Next Release (v2.1)
+- [ ] **Authentication Components**: Login, register, and profile management UI
+- [ ] **User Management Interface**: Complete user admin interface
+- [ ] **Chart & Data Visualization**: Chart.js integration and dashboard widgets
+- [ ] **Form Components**: Advanced form builder with validation
+- [ ] **Data Tables**: Sortable, filterable table components
+
+### 🎯 Future Releases
+- [ ] **Mobile App**: React Native or Flutter mobile companion
+- [ ] **Advanced Analytics**: Built-in analytics and reporting dashboard
+- [ ] **Third-party Integrations**: API connectors for popular services
+- [ ] **Advanced Theming**: Theme builder and customization tools
+- [ ] **Plugin System**: Extensible plugin architecture
 
 ---
 
@@ -225,9 +278,31 @@ Stay updated with our development plans and upcoming features.
 
 **Ready to build something amazing?**
 
-[Get Started Now →](/content/getting-started/index) •
-[View Components →](/content/components/overview) •
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+<div class="space-y-2">
+<strong>🚀 Get Started</strong><br>
+[Installation Guide →](/content/getting-started/index)<br>
+[Quick Start →](/content/guides/quick-start)
+</div>
+
+<div class="space-y-2">
+<strong>🧩 Components</strong><br>
+[Component Library →](/content/components/overview)<br>
+[Settings Panel →](/content/components/settings/index)
+</div>
+
+<div class="space-y-2">
+<strong>🔧 Services</strong><br>
+[API Client →](/content/services/api-client)<br>
+[Toast System →](/content/services/toast)
+</div>
+
+<div class="space-y-2">
+<strong>📚 Documentation</strong><br>
+[All Services →](/content/services/index)<br>
 [API Reference →](/content/api/index)
+</div>
+</div>
 
 </div>
 

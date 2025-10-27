@@ -1,86 +1,46 @@
 ---
 title: Dashboard Components
-description: Data visualization and dashboard components for admin interfaces
+description: Navigation and layout components for dashboard interfaces
 category: components
 order: 4
 ---
 
 # Dashboard Components
 
-God Panel's dashboard components provide powerful data visualization and management tools for building comprehensive admin interfaces. These components are designed to display metrics, charts, and real-time data effectively.
+God Panel's dashboard components provide comprehensive navigation and layout functionality for admin interfaces. These components work together to create responsive, accessible dashboard navigation with theme support and internationalization.
 
 ## Component Categories
 
-### 📊 Data Display
-- **StatsCard**: Key metrics and KPIs
-- **DataTable**: Sortable, filterable data tables
-- **Chart**: Various chart types (line, bar, pie, etc.)
-- **Progress**: Progress bars and indicators
+### 🧭 Navigation Components
+- **DashboardHeader**: Top navigation bar with breadcrumbs, notifications, and user menu
+- **DashboardNav**: Main sidebar navigation with collapsible groups and mini mode
+- **DashboardNavMobile**: Mobile-optimized navigation drawer
 
-### 📈 Analytics
-- **MetricsGrid**: Grid of statistical cards
-- **TrendChart**: Trending data visualization
-- **ComparisonChart**: Side-by-side data comparison
-- **Heatmap**: Color-coded data representation
+### 🎨 Layout Features
+- **Responsive Design**: Adapts to desktop, tablet, and mobile
+- **RTL Support**: Right-to-left language support
+- **Theme Integration**: Dark/light mode compatibility
+- **Mini Mode**: Collapsible sidebar for space efficiency
 
-### 🔄 Real-time Updates
-- **LiveStats**: Real-time metric updates
-- **ActivityFeed**: Live activity stream
-- **NotificationPanel**: Real-time notifications
+## DashboardHeader Component
 
-## StatsCard Component
-
-Display key metrics and KPIs in an attractive card format.
+The main navigation header component with breadcrumbs, search, notifications, and user menu.
 
 ```vue
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Basic stats -->
-    <StatsCard
-      title="Total Users"
-      :value="userCount"
-      icon="users"
-      trend="+12%"
-      trend-up
-    />
-
-    <StatsCard
-      title="Revenue"
-      :value="formatCurrency(revenue)"
-      icon="dollar-sign"
-      trend="+8.2%"
-      trend-up
-    />
-
-    <StatsCard
-      title="Orders"
-      :value="orderCount"
-      icon="shopping-cart"
-      trend="-2.4%"
-      :trend-up="false"
-    />
-
-    <StatsCard
-      title="Conversion Rate"
-      :value="conversionRate + '%'"
-      icon="trending-up"
-      trend="+5.1%"
-      trend-up
-    />
-  </div>
+  <!-- Main dashboard header -->
+  <DashboardHeader
+    :mobile="isMobile"
+    @toggle-nav="handleNavToggle"
+  />
 </template>
 
 <script setup>
-const userCount = ref(12543)
-const revenue = ref(45678.90)
-const orderCount = ref(1234)
-const conversionRate = ref(3.24)
+const isMobile = ref(false)
+const navigationOpen = ref(false)
 
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  }).format(value)
+const handleNavToggle = () => {
+  navigationOpen.value = !navigationOpen.value
 }
 </script>
 ```
@@ -89,664 +49,598 @@ const formatCurrency = (value) => {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `title` | string | - | Card title |
-| `value` | string \| number | - | Main value to display |
-| `icon` | string | - | Icon name |
-| `trend` | string | - | Trend percentage |
-| `trend-up` | boolean | true | Whether trend is positive |
-| `loading` | boolean | false | Show loading state |
-
-## DataTable Component
-
-Powerful data table with sorting, filtering, and pagination.
-
-```vue
-<template>
-  <DataTable
-    :data="users"
-    :columns="columns"
-    :loading="loading"
-    :pagination="pagination"
-    @sort="handleSort"
-    @filter="handleFilter"
-    @page-change="handlePageChange"
-  >
-    <!-- Custom column templates -->
-    <template #name="{ item }">
-      <div class="flex items-center space-x-3">
-        <Avatar :src="item.avatar" :alt="item.name" size="sm" />
-        <div>
-          <div class="font-medium">{{ item.name }}</div>
-          <div class="text-sm text-gray-500">{{ item.email }}</div>
-        </div>
-      </div>
-    </template>
-
-    <template #status="{ item }">
-      <Badge :variant="getStatusVariant(item.status)">
-        {{ item.status }}
-      </Badge>
-    </template>
-
-    <template #actions="{ item }">
-      <ButtonGroup size="sm">
-        <Button variant="secondary" icon="eye" @click="viewUser(item)" />
-        <Button variant="secondary" icon="edit" @click="editUser(item)" />
-        <Button variant="error" icon="trash" @click="deleteUser(item)" />
-      </ButtonGroup>
-    </template>
-  </DataTable>
-</template>
-
-<script setup>
-const users = ref([])
-const loading = ref(false)
-
-const columns = [
-  { key: 'name', label: 'User', sortable: true },
-  { key: 'role', label: 'Role', sortable: true },
-  { key: 'status', label: 'Status', sortable: true },
-  { key: 'createdAt', label: 'Created', sortable: true },
-  { key: 'actions', label: 'Actions' }
-]
-
-const pagination = {
-  page: 1,
-  limit: 10,
-  total: 0
-}
-
-const handleSort = (column, direction) => {
-  // Handle sorting
-  console.log('Sort:', column, direction)
-}
-
-const handleFilter = (filters) => {
-  // Handle filtering
-  console.log('Filters:', filters)
-}
-
-const handlePageChange = (page) => {
-  // Handle pagination
-  console.log('Page:', page)
-}
-
-const getStatusVariant = (status) => {
-  const variants = {
-    active: 'success',
-    inactive: 'secondary',
-    suspended: 'warning',
-    banned: 'error'
-  }
-  return variants[status] || 'secondary'
-}
-</script>
-```
-
-### Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `data` | array | [] | Table data |
-| `columns` | array | [] | Column definitions |
-| `loading` | boolean | false | Show loading state |
-| `pagination` | object | - | Pagination configuration |
-| `sortable` | boolean | true | Enable column sorting |
-| `filterable` | boolean | true | Enable filtering |
+| `mobile` | boolean | `false` | Enable mobile-specific styling |
+| `isHorizontal` | boolean | `false` | Horizontal layout mode |
 
 ### Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `sort` | { column, direction } | Column sort changed |
-| `filter` | filters object | Filters applied |
-| `page-change` | page number | Page changed |
-| `row-click` | row data | Row clicked |
+| `toggle-nav` | - | Emitted when mobile nav toggle is clicked |
 
-## Chart Components
+### Features
 
-### Line Chart
+- **Breadcrumbs**: Dynamic breadcrumb navigation based on current route
+- **Search Field**: Integrated search functionality (commented in current implementation)
+- **Notification Dropdown**: Real-time notifications with badge counter
+- **User Menu**: Profile access, settings, and logout options
+- **Theme Integration**: Language switcher and settings button
+- **Responsive Design**: Mobile-friendly layout with collapsible elements
+
+### Breadcrumb Integration
+
+The header automatically generates breadcrumbs from the current route:
+
+```vue
+<script setup>
+// Breadcrumbs are generated from route path
+// Example: /dashboard/users/edit -> Dashboard > Users > Edit
+const breadcrumbItems = [
+  { title: 'Dashboard', to: '/dashboard' },
+  { title: 'Users', to: '/dashboard/users' },
+  { title: 'Edit', disabled: true }
+]
+</script>
+```
+
+## DashboardNav Component
+
+The main sidebar navigation with advanced features for desktop and tablet interfaces.
 
 ```vue
 <template>
-  <Chart
-    type="line"
-    :data="chartData"
-    :options="chartOptions"
-    height="300"
+  <DashboardNav
+    :mini="sidebarMini"
+    :mobile="false"
+    @toggle-mini="handleMiniToggle"
   />
 </template>
 
 <script setup>
-const chartData = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  datasets: [
-    {
-      label: 'Revenue',
-      data: [12000, 19000, 15000, 25000, 22000, 30000],
-      borderColor: 'rgb(59, 130, 246)',
-      backgroundColor: 'rgba(59, 130, 246, 0.1)',
-      tension: 0.4
-    },
-    {
-      label: 'Users',
-      data: [1200, 1900, 1500, 2500, 2200, 3000],
-      borderColor: 'rgb(16, 185, 129)',
-      backgroundColor: 'rgba(16, 185, 129, 0.1)',
-      tension: 0.4
-    }
-  ]
-}
+const sidebarMini = ref(false)
 
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'top'
-    },
-    tooltip: {
-      mode: 'index',
-      intersect: false
-    }
-  },
-  scales: {
-    y: {
-      beginAtZero: true,
-      grid: {
-        color: 'rgba(0, 0, 0, 0.1)'
-      }
-    },
-    x: {
-      grid: {
-        display: false
-      }
-    }
-  }
+const handleMiniToggle = () => {
+  sidebarMini.value = !sidebarMini.value
 }
 </script>
-```
-
-### Bar Chart
-
-```vue
-<template>
-  <Chart
-    type="bar"
-    :data="barChartData"
-    :options="barChartOptions"
-    height="400"
-  />
-</template>
-
-<script setup>
-const barChartData = {
-  labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-  datasets: [
-    {
-      label: 'Sales',
-      data: [45000, 52000, 48000, 61000],
-      backgroundColor: [
-        'rgba(59, 130, 246, 0.8)',
-        'rgba(16, 185, 129, 0.8)',
-        'rgba(245, 158, 11, 0.8)',
-        'rgba(239, 68, 68, 0.8)'
-      ],
-      borderWidth: 0
-    }
-  ]
-}
-
-const barChartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false
-    }
-  },
-  scales: {
-    y: {
-      beginAtZero: true,
-      grid: {
-        color: 'rgba(0, 0, 0, 0.1)'
-      }
-    },
-    x: {
-      grid: {
-        display: false
-      }
-    }
-  }
-}
-</script>
-```
-
-## Progress Component
-
-Visual progress indicators for various use cases.
-
-```vue
-<template>
-  <div class="space-y-6">
-    <!-- Basic progress -->
-    <Progress :value="75" label="Completion" />
-
-    <!-- With custom colors -->
-    <Progress
-      :value="60"
-      label="Server Usage"
-      variant="warning"
-      show-percentage
-    />
-
-    <!-- Circular progress -->
-    <Progress
-      :value="85"
-      type="circular"
-      size="lg"
-      label="Storage"
-    />
-
-    <!-- Multiple progress bars -->
-    <div class="space-y-2">
-      <Progress :value="100" label="CPU" variant="error" size="sm" />
-      <Progress :value="65" label="Memory" variant="warning" size="sm" />
-      <Progress :value="30" label="Disk" variant="success" size="sm" />
-    </div>
-  </div>
-</template>
 ```
 
 ### Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | number | 0 | Progress value (0-100) |
-| `label` | string | - | Progress label |
-| `variant` | string | 'primary' | Color variant |
-| `size` | string | 'md' | Size variant |
-| `type` | string | 'linear' | 'linear' or 'circular' |
-| `show-percentage` | boolean | false | Show percentage text |
+| `mini` | boolean | `false` | Collapsed mini mode |
+| `mobile` | boolean | `false` | Mobile navigation style |
 
-## Real-time Components
+### Events
 
-### Live Stats
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `toggle-mini` | - | Emitted when mini mode toggle is clicked |
+| `open-mobile` | - | Emitted when mobile menu is opened |
+
+### Features
+
+- **Collapsible Groups**: Expandable navigation sections
+- **Mini Mode**: Space-efficient collapsed state
+- **Active Route Detection**: Automatic highlighting of current page
+- **Badge Support**: Notification badges on navigation items
+- **RTL Support**: Right-to-left text direction support
+- **Theme Integration**: Respects current theme and layout settings
+
+### Navigation Structure
+
+```vue
+<script setup>
+// Navigation items are defined in ~/utils/routes
+const navItems = [
+  {
+    key: 'dashboard',
+    title: 'nav.dashboard',
+    path: '/dashboard',
+    icon: 'mdi-view-dashboard'
+  },
+  {
+    key: 'users',
+    title: 'nav.users',
+    path: '/dashboard/users',
+    icon: 'mdi-account-group',
+    badge: '3'
+  },
+  {
+    key: 'settings',
+    title: 'nav.settings',
+    icon: 'mdi-cog',
+    children: [
+      { key: 'profile', title: 'nav.profile', path: '/dashboard/profile', icon: 'mdi-account' },
+      { key: 'preferences', title: 'nav.preferences', path: '/dashboard/preferences', icon: 'mdi-tune' }
+    ]
+  }
+]
+</script>
+```
+
+### Responsive Behavior
 
 ```vue
 <template>
-  <LiveStats
-    :metrics="liveMetrics"
-    :update-interval="5000"
-    @update="handleMetricsUpdate"
+  <!-- Desktop: Always visible sidebar -->
+  <DashboardNav v-if="!mobile" :mini="mini" />
+
+  <!-- Tablet/Mobile: Overlay drawer -->
+  <DashboardNavMobile v-else :open="navOpen" @close="closeNav" />
+</template>
+```
+
+## DashboardNavMobile Component
+
+Mobile-optimized navigation drawer with user profile and quick actions.
+
+```vue
+<template>
+  <DashboardNavMobile
+    :open="navOpen"
+    @update:open="navOpen = $event"
+    @close="handleClose"
   />
 </template>
 
 <script setup>
-const liveMetrics = ref([
-  { key: 'activeUsers', label: 'Active Users', icon: 'users', format: 'number' },
-  { key: 'responseTime', label: 'Response Time', icon: 'clock', format: 'duration' },
-  { key: 'errorRate', label: 'Error Rate', icon: 'alert-triangle', format: 'percentage' }
-])
+const navOpen = ref(false)
 
-const handleMetricsUpdate = (metrics) => {
-  console.log('Metrics updated:', metrics)
+const handleClose = () => {
+  navOpen.value = false
 }
 </script>
 ```
 
-### Activity Feed
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | boolean | `false` | Controls drawer visibility |
+
+### Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `update:open` | boolean | Drawer open state changed |
+| `close` | - | Emitted when close is requested |
+
+### Features
+
+- **User Profile Section**: Avatar, name, and role display
+- **Full Navigation**: Complete navigation menu for mobile
+- **Quick Actions**: Settings and logout buttons in footer
+- **Touch Optimized**: Mobile-friendly touch targets
+- **Accessibility**: ARIA labels and keyboard navigation
+
+## Navigation Configuration
+
+Navigation items are centrally managed in the routes utility:
+
+```typescript
+// ~/utils/routes.ts
+export interface NavItem {
+  key: string
+  title: string
+  path: string
+  icon: string
+  badge?: string
+  children?: NavItem[]
+}
+
+export const dashboardNavItems: NavItem[] = [
+  {
+    key: 'overview',
+    title: 'nav.overview',
+    path: '/dashboard',
+    icon: 'mdi-view-dashboard'
+  },
+  {
+    key: 'analytics',
+    title: 'nav.analytics',
+    path: '/dashboard/analytics',
+    icon: 'mdi-chart-line',
+    badge: 'new'
+  },
+  // ... more items
+]
+```
+
+## Theme Integration
+
+All dashboard components integrate with the theme system:
 
 ```vue
-<template>
-  <ActivityFeed
-    :activities="activities"
-    :loading="loading"
-    @load-more="loadMoreActivities"
-  />
-</template>
-
 <script setup>
-const activities = ref([])
-const loading = ref(false)
+import { useSettingsStore } from '~/stores/settings'
 
-const loadMoreActivities = async () => {
-  loading.value = true
-  try {
-    const newActivities = await $fetch('/api/activities', {
-      params: {
-        page: Math.floor(activities.value.length / 20) + 1
-      }
-    })
-    activities.value.push(...newActivities)
-  } finally {
-    loading.value = false
-  }
-}
+const settingsStore = useSettingsStore()
+
+// Components automatically adapt to theme changes
+// - Dark/light mode support
+// - Compact layout mode
+// - RTL text direction
+// - Custom color schemes
 </script>
 ```
 
-## Theming and Styling
+## Responsive Breakpoints
 
-### Chart Theming
+The components adapt to different screen sizes:
 
 ```css
-/* Chart color scheme */
-.chart-container {
-  --chart-primary: var(--color-primary);
-  --chart-secondary: var(--color-secondary);
-  --chart-success: var(--color-success);
-  --chart-warning: var(--color-warning);
-  --chart-error: var(--color-error);
+/* Mobile (< 960px) */
+.dashboard-header .search-field {
+  display: none;
 }
 
-[data-theme="dark"] .chart-container {
-  --chart-grid: rgba(255, 255, 255, 0.1);
-  --chart-text: var(--color-gray-300);
+/* Tablet (960px - 1263px) */
+.dashboard-nav {
+  width: 260px; /* Standard width */
 }
 
-[data-theme="light"] .chart-container {
-  --chart-grid: rgba(0, 0, 0, 0.1);
-  --chart-text: var(--color-gray-700);
-}
-```
-
-### Stats Card Styling
-
-```css
-/* Stats card theming */
-.stats-card {
-  --stats-bg: var(--color-white);
-  --stats-border: var(--color-gray-200);
-  --stats-text: var(--color-gray-900);
-  --stats-text-muted: var(--color-gray-500);
-  --stats-trend-up: var(--color-success);
-  --stats-trend-down: var(--color-error);
+/* Desktop (≥ 1264px) */
+.dashboard-nav {
+  width: 300px; /* Full width */
 }
 
-[data-theme="dark"] .stats-card {
-  --stats-bg: var(--color-gray-800);
-  --stats-border: var(--color-gray-700);
-  --stats-text: var(--color-gray-100);
-  --stats-text-muted: var(--color-gray-400);
+.nav-mini {
+  width: 88px; /* Collapsed width */
 }
 ```
 
-## Advanced Features
+## Internationalization
 
-### Export Functionality
+Navigation supports full i18n integration:
 
 ```vue
-<template>
-  <div class="flex space-x-2">
-    <Button
-      variant="secondary"
-      icon="download"
-      @click="exportToCSV"
-    >
-      Export CSV
-    </Button>
-
-    <Button
-      variant="secondary"
-      icon="file-text"
-      @click="exportToPDF"
-    >
-      Export PDF
-    </Button>
-  </div>
-</template>
-
 <script setup>
-const exportToCSV = () => {
-  // Export table data to CSV
-  const csv = generateCSV(tableData.value)
-  downloadFile(csv, 'data.csv', 'text/csv')
-}
+import { useI18n } from 'vue-i18n'
 
-const exportToPDF = () => {
-  // Export chart or table to PDF
-  const pdf = generatePDF()
-  downloadFile(pdf, 'report.pdf', 'application/pdf')
-}
-</script>
-```
+const { t } = useI18n()
 
-### Filtering and Search
-
-```vue
-<template>
-  <div class="flex space-x-4 mb-6">
-    <Input
-      v-model="searchQuery"
-      placeholder="Search..."
-      icon="search"
-      class="flex-1"
-    />
-
-    <Select
-      v-model="statusFilter"
-      placeholder="Filter by status"
-      :options="statusOptions"
-    />
-
-    <Button variant="secondary" @click="clearFilters">
-      Clear Filters
-    </Button>
-  </div>
-</template>
-
-<script setup>
-const searchQuery = ref('')
-const statusFilter = ref('')
-
-const filteredData = computed(() => {
-  let data = tableData.value
-
-  // Apply search filter
-  if (searchQuery.value) {
-    data = data.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    )
-  }
-
-  // Apply status filter
-  if (statusFilter.value) {
-    data = data.filter(item => item.status === statusFilter.value)
-  }
-
-  return data
-})
+// Navigation titles use translation keys
+// nav.dashboard -> "Dashboard"
+// nav.users -> "Users"
+// nav.settings -> "Settings"
 </script>
 ```
 
 ## Integration Examples
 
-### With Chart.js
+### Complete Dashboard Layout
 
 ```vue
+<template>
+  <div class="dashboard-layout">
+    <!-- Top header -->
+    <DashboardHeader
+      :mobile="mobile"
+      @toggle-nav="toggleMobileNav"
+    />
+
+    <!-- Main navigation -->
+    <DashboardNav
+      v-if="!mobile"
+      :mini="sidebarMini"
+      @toggle-mini="toggleMiniMode"
+    />
+
+    <!-- Mobile navigation -->
+    <DashboardNavMobile
+      v-else
+      :open="mobileNavOpen"
+      @close="closeMobileNav"
+    />
+
+    <!-- Main content -->
+    <main class="dashboard-content">
+      <slot />
+    </main>
+  </div>
+</template>
+
 <script setup>
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement
-} from 'chart.js'
+import { ref, computed } from 'vue'
+import { useSettingsStore } from '~/stores/settings'
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-)
+const settingsStore = useSettingsStore()
+const mobile = ref(false)
+const sidebarMini = ref(false)
+const mobileNavOpen = ref(false)
 
-// Chart component handles Chart.js integration automatically
+const toggleMobileNav = () => {
+  mobileNavOpen.value = !mobileNavOpen.value
+}
+
+const toggleMiniMode = () => {
+  sidebarMini.value = !sidebarMini.value
+}
+
+const closeMobileNav = () => {
+  mobileNavOpen.value = false
+}
+
+// Responsive detection
+const checkMobile = () => {
+  mobile.value = window.innerWidth < 960
+}
+
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 </script>
 ```
 
-### With Data Sources
+### Navigation with Permissions
 
 ```vue
 <script setup>
-// Fetch data from API
-const dashboardData = ref(null)
+import { computed } from 'vue'
+import { useAuthStore } from '~/stores/auth'
 
-onMounted(async () => {
-  try {
-    dashboardData.value = await $fetch('/api/dashboard')
-  } catch (error) {
-    console.error('Failed to fetch dashboard data:', error)
-  }
-})
+const authStore = useAuthStore()
 
-// Real-time updates
-const { data: liveData } = useFetch('/api/dashboard/live', {
-  server: false,
-  default: () => ({}),
-  transform: (data) => ({
-    users: data.activeUsers || 0,
-    revenue: data.totalRevenue || 0,
-    orders: data.orderCount || 0
+// Filter navigation items based on permissions
+const allowedNavItems = computed(() => {
+  return dashboardNavItems.filter(item => {
+    // Check if user has permission for this navigation item
+    return authStore.hasPermission(item.permission) || !item.permission
   })
 })
-</script>
-```
 
-## Performance Optimization
-
-### Virtual Scrolling
-
-For large datasets, use virtual scrolling:
-
-```vue
-<template>
-  <DataTable
-    :data="largeDataset"
-    :virtual-scroll="true"
-    :item-height="60"
-    :container-height="400"
-  />
-</template>
-```
-
-### Chart Optimization
-
-```vue
-<script setup>
-// Use computed for expensive chart calculations
-const chartData = computed(() => {
-  if (!rawData.value) return null
-
-  return {
-    labels: rawData.value.map(item => item.date),
-    datasets: [{
-      data: rawData.value.map(item => item.value),
-      backgroundColor: generateColors(rawData.value.length)
-    }]
-  }
+// Show admin-only sections
+const showAdminSection = computed(() => {
+  return authStore.hasRole('admin')
 })
 </script>
 ```
 
-## Accessibility
-
-### Chart Accessibility
+### Custom Navigation Items
 
 ```vue
-<template>
-  <Chart
-    :data="chartData"
-    :accessibility="{
-      enabled: true,
-      description: 'Revenue chart showing monthly growth'
-    }"
-  />
-</template>
+<script setup>
+// Add custom navigation items
+const customNavItems = [
+  {
+    key: 'custom-reports',
+    title: 'nav.customReports',
+    path: '/dashboard/reports',
+    icon: 'mdi-file-chart',
+    badge: 'beta'
+  }
+]
+
+// Combine with default navigation
+const allNavItems = computed(() => {
+  return [...dashboardNavItems, ...customNavItems]
+})
+</script>
 ```
+
+## Customization
+
+### Custom Styling
+
+```css
+/* Custom navigation colors */
+.dashboard-nav {
+  --nav-bg: rgb(var(--v-theme-surface));
+  --nav-border: rgb(var(--v-theme-surface-variant));
+  --nav-text: rgb(var(--v-theme-on-surface));
+  --nav-active: rgb(var(--v-theme-primary));
+}
+
+.nav-item-active {
+  background: rgba(var(--nav-active-rgb), 0.12);
+  color: var(--nav-active);
+}
+
+/* Custom header styling */
+.dashboard-header {
+  --header-bg: rgb(var(--v-theme-surface));
+  --header-border: rgb(var(--v-theme-surface-variant));
+  --header-text: rgb(var(--v-theme-on-surface));
+}
+```
+
+### Navigation Themes
+
+```vue
+<script setup>
+// Different navigation themes
+const navThemes = {
+  light: {
+    background: '#ffffff',
+    border: '#e5e7eb',
+    text: '#374151'
+  },
+  dark: {
+    background: '#1f2937',
+    border: '#374151',
+    text: '#f9fafb'
+  },
+  colorful: {
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    border: 'transparent',
+    text: '#ffffff'
+  }
+}
+</script>
+```
+
+## Accessibility Features
+
+All dashboard components are built with accessibility in mind:
 
 ### Keyboard Navigation
 
+- **Tab Navigation**: Full keyboard navigation support
+- **Enter/Space**: Activate buttons and links
+- **Escape**: Close mobile navigation and dropdowns
+- **Arrow Keys**: Navigate through menu items
+
+### Screen Reader Support
+
 ```vue
-<!-- Data table keyboard navigation -->
-<DataTable
-  :data="tableData"
-  keyboard-navigation
-  @row-select="handleRowSelect"
-  @row-action="handleRowAction"
-/>
+<template>
+  <DashboardNav
+    aria-label="Main navigation"
+    role="navigation"
+  >
+    <v-list-item
+      v-for="item in navItems"
+      :key="item.key"
+      :aria-label="t(item.title)"
+      role="menuitem"
+    >
+      {{ t(item.title) }}
+    </v-list-item>
+  </DashboardNav>
+</template>
+```
+
+### ARIA Attributes
+
+- **aria-label**: Descriptive labels for screen readers
+- **role**: Proper semantic roles (navigation, menuitem, etc.)
+- **aria-expanded**: Group expansion state
+- **aria-current**: Current page indication
+
+## Performance Considerations
+
+### Navigation Loading
+
+```vue
+<script setup>
+// Lazy load navigation items
+const navItems = ref([])
+
+onMounted(async () => {
+  // Load navigation based on user permissions
+  const userNav = await fetchNavigationForUser()
+  navItems.value = userNav
+})
+</script>
+```
+
+### Mobile Performance
+
+```vue
+<script setup>
+// Optimize mobile navigation
+const mobileNavItems = computed(() => {
+  // Limit items for mobile performance
+  return navItems.value.slice(0, 10)
+})
+</script>
 ```
 
 ## Best Practices
 
-### Data Visualization
+### Navigation Structure
 
-1. **Choose appropriate chart types** for your data
-2. **Use consistent color schemes** across charts
-3. **Provide context** with titles and labels
-4. **Consider accessibility** for colorblind users
-5. **Don't overload** with too much data
+1. **Keep navigation shallow**: Limit nesting to 2-3 levels
+2. **Use descriptive icons**: Choose icons that clearly represent functionality
+3. **Group related items**: Use navigation groups for related features
+4. **Consider user workflows**: Order items by frequency of use
+
+### Mobile Experience
+
+1. **Test touch targets**: Ensure buttons are at least 44px
+2. **Optimize for thumb navigation**: Place important items in easy reach
+3. **Provide quick actions**: Include common actions in mobile header
+4. **Consider one-handed use**: Design for comfortable interaction
 
 ### Performance
 
-1. **Lazy load** chart libraries
-2. **Debounce** user interactions
-3. **Virtualize** large data tables
-4. **Cache** expensive calculations
-5. **Optimize** re-renders
-
-### User Experience
-
-1. **Provide loading states** for async data
-2. **Show error states** gracefully
-3. **Allow customization** of views
-4. **Implement proper filtering** and search
-5. **Consider mobile responsiveness**
+1. **Lazy load navigation items**: Load only when needed
+2. **Cache permissions**: Avoid repeated permission checks
+3. **Debounce resize events**: Optimize responsive behavior
+4. **Use computed properties**: Efficient reactive navigation state
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Charts not rendering:**
-- Ensure Chart.js is properly imported
-- Check data format matches expected structure
-- Verify container dimensions
+**Navigation not responsive:**
+- Check CSS media queries are working
+- Verify viewport meta tag is set
+- Test on actual devices, not just browser dev tools
 
-**Performance issues:**
-- Implement virtual scrolling for large datasets
-- Use computed properties for derived data
-- Debounce rapid updates
+**Active states not working:**
+- Ensure route paths match navigation item paths
+- Check `isActiveRoute` utility function
+- Verify router configuration
 
-**Styling problems:**
-- Check CSS custom properties are defined
-- Verify theme configuration
-- Test in both light and dark modes
+**Theme not applying:**
+- Check if theme store is properly configured
+- Verify CSS custom properties are defined
+- Test theme switching functionality
 
-## Contributing
+**Mobile navigation not opening:**
+- Check if `open` prop is properly bound
+- Verify event handlers are working
+- Test touch events on mobile devices
 
-Help improve dashboard components:
+**RTL layout issues:**
+- Verify direction settings in theme store
+- Check RTL-specific CSS rules
+- Test with actual RTL languages
 
-1. **Add new chart types** or visualizations
-2. **Improve performance** optimizations
-3. **Enhance accessibility** features
-4. **Add comprehensive tests**
-5. **Create example implementations**
+## Integration with Layout System
 
-## Resources
+```vue
+<!-- In your dashboard layout -->
+<template>
+  <div class="dashboard-container">
+    <!-- Navigation components -->
+    <DashboardHeader />
+    <DashboardNav />
+    <DashboardNavMobile />
 
-- **[Chart.js Documentation](https://www.chartjs.org/docs/)**
-- **[Data Visualization Best Practices](https://www.tableau.com/learn/articles/data-visualization)**
-- **[D3.js](https://d3js.org/)** for advanced visualizations
-- **[Accessibility in Data Viz](https://accessibility.psu.edu/graphs/)**
+    <!-- Content area -->
+    <div class="dashboard-content">
+      <!-- Page content with proper spacing -->
+      <div class="content-wrapper">
+        <slot />
+      </div>
+    </div>
+  </div>
+</template>
 
----
+<style>
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
 
-**Next**: Explore **[Settings Components](../settings)** for configuration UI and **[Theme Components](../theme)** for styling customization.
+.dashboard-content {
+  flex: 1;
+  margin-left: var(--nav-width, 300px);
+  padding: 24px;
+}
+
+@media (max-width: 959px) {
+  .dashboard-content {
+    margin-left: 0;
+  }
+}
+</style>
+```
+
+## Next Steps
+
+- **[Layout System Documentation](../layouts)** - Complete layout components
+- **[Theme Components Documentation](../theme)** - Theme customization options
+- **[Settings Components Documentation](../settings)** - Settings drawer components
+- **[Settings Store Documentation](../../stores/settings)** - Navigation preferences
+- **[Navigation Utils](../../utils/routes)** - Navigation configuration and utilities
+

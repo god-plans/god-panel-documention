@@ -25,6 +25,12 @@ Comprehensive guides covering authentication, API usage, customization, and best
 ### 🧩 [Components](./components)
 Detailed documentation for all available components, their props, events, and usage examples.
 
+### 🔧 [Services](./services)
+Core services including API client, toast notifications, logging system, and integration patterns.
+
+### 🗂️ [State Management](./stores)
+Pinia stores for application state management and data persistence.
+
 ### 🔌 [API Reference](./api)
 Complete API documentation with endpoints, parameters, and response formats.
 
@@ -55,7 +61,7 @@ npm run build
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./guides/contributing) for details on how to get involved.
+We welcome contributions! Please see our [Contributing Guide](./contributing) for details on how to get involved.
 
 ---
 

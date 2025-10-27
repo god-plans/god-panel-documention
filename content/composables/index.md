@@ -1124,7 +1124,8 @@ onMounted(() => {
 
 ## Next Steps
 
-- **[API Client Documentation](../services/api-client)** - HTTP client implementation
-- **[Authentication Guide](../guides/authentication)** - Complete auth setup
-- **[State Management Guide](../stores)** - Pinia store documentation
-- **[Error Handling Guide](../guides/error-handling)** - Error management patterns
+- **[API Client Service Documentation](../services/api-client)** - HTTP client implementation
+- **[Toast Service Documentation](../services/toast)** - Notification system integration
+- **[Logger Service Documentation](../services/logger)** - Logging and debugging tools
+- **[Services Overview](../services)** - Complete services documentation
+

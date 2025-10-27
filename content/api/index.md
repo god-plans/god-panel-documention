@@ -429,7 +429,23 @@ Authorization: Bearer admin-jwt-token
 | 429  | Rate Limited |
 | 500  | Internal Server Error |
 
-## SDK & Libraries
+## Client Libraries
+
+### API Client Service
+
+For frontend applications, use the built-in API Client Service:
+
+```typescript
+import { apiClient } from '~/services/api-client'
+
+// Simple GET request
+const users = await apiClient.get('/api/users')
+
+// POST with automatic error handling
+const newUser = await apiClient.post('/api/users', userData)
+```
+
+**[→ API Client Service Documentation](../../services/api-client)** - Complete HTTP client documentation
 
 ### JavaScript SDK
 

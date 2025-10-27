@@ -167,6 +167,7 @@ Now that you have God Panel running, check out these guides:
 - **[Authentication Setup](./authentication)** - Configure user authentication
 - **[Theme Customization](./theme)** - Customize the appearance
 - **[Component Usage](./components)** - Learn about available components
+- **[Services Documentation](../services)** - API client, notifications, and logging
 - **[API Integration](./api)** - Connect to your backend
 
 ## Troubleshooting

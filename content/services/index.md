@@ -596,9 +596,9 @@ describe('AuthService', () => {
 
 ## Next Steps
 
-- **[API Client Documentation](./api-client)** - Detailed HTTP client features
-- **[Authentication Service](./auth)** - Complete authentication system
-- **[User Service](./user)** - User management features
-- **[Dashboard Service](./dashboard)** - Dashboard data aggregation
-- **[Toast Service](./toast)** - Notification system details
-- **[Logger Service](./logger)** - Logging and debugging tools
+- **[API Client Service Documentation](./api-client)** - Detailed HTTP client features
+- **[Toast Service Documentation](./toast)** - Notification system details
+- **[Logger Service Documentation](./logger)** - Logging and debugging tools
+- **[Composables Documentation](../composables)** - Vue composables integration
+- **[Components Documentation](../components)** - UI components overview
+

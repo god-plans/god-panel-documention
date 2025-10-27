@@ -470,4 +470,13 @@ npm run clean        # Clear cache and builds
 
 ---
 
-**Next**: Check out the **[Authentication Guide](./authentication)** to add complete user management to your application!
+## Next Steps
+
+Now that you have a basic setup, explore these essential features:
+
+- **[Services Documentation](../services)** - API client, notifications, and logging systems
+- **[Authentication Guide](./authentication)** - Complete user management system
+- **[Component Documentation](../components)** - UI components and layouts
+- **[Theme Customization](./theming)** - Visual customization options
+
+**Ready to build?** Start with the **[Services Overview](../services)** to understand the core systems!

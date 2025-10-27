@@ -28,6 +28,23 @@ export default defineConfig({
         text: 'Documentation',
         items: [
           { text: 'Components', link: '/content/components/overview' },
+          {
+            text: 'Services',
+            items: [
+              { text: 'Services Overview', link: '/content/services/index' },
+              { text: 'API Client Service', link: '/content/services/api-client' },
+              { text: 'Toast Service', link: '/content/services/toast' },
+              { text: 'Logger Service', link: '/content/services/logger' }
+            ]
+          },
+          {
+            text: 'State Management',
+            items: [
+              { text: 'Stores Overview', link: '/content/stores/index' },
+              { text: 'Settings Store', link: '/content/stores/settings' },
+              { text: 'Auth Store', link: '/content/stores/auth' }
+            ]
+          },
           { text: 'API Reference', link: '/content/api/index' },
           { text: 'Authentication', link: '/content/guides/authentication' },
           { text: 'Theming', link: '/content/guides/theming' }
@@ -120,6 +137,19 @@ export default defineConfig({
         }
       ],
 
+      // Services
+      '/content/services/': [
+        {
+          text: 'Services',
+          items: [
+            { text: 'Services Overview', link: '/content/services/index' },
+            { text: 'API Client Service', link: '/content/services/api-client' },
+            { text: 'Toast Service', link: '/content/services/toast' },
+            { text: 'Logger Service', link: '/content/services/logger' }
+          ]
+        }
+      ],
+
       // API Reference
       '/content/api/': [
         {
@@ -150,6 +180,18 @@ export default defineConfig({
             { text: 'Changelog', link: '/content/changelog' },
             { text: 'Contributing', link: '/content/contributing' },
             { text: 'Deployment', link: '/content/deployment' }
+          ]
+        }
+      ],
+
+      // Stores (when implemented)
+      '/content/stores/': [
+        {
+          text: 'State Management',
+          items: [
+            { text: 'Settings Store', link: '/content/stores/settings' },
+            { text: 'Auth Store', link: '/content/stores/auth' },
+            { text: 'Store Overview', link: '/content/stores/index' }
           ]
         }
       ]
