@@ -47,35 +47,51 @@ Docker
 ```bash
 # Clone the repository
 git clone https://github.com/your-org/god-panel.git
-cd god-panel
+cd god-panel/god-panel-nuxt
 
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server (runs on port 3333)
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 
 # Run tests
 npm run test
 
 # Run linting
 npm run lint
+
+# Type checking
+npm run typecheck
 ```
 
 ### Project Structure
 ```
 god-panel/
-├── app/                    # Nuxt application
-│   ├── components/        # Vue components
-│   ├── composables/       # Nuxt composables
-│   ├── pages/            # File-based routing
-│   ├── layouts/          # Layout components
-│   └── stores/           # Pinia stores
-├── content/               # Documentation content
-├── server/               # Server-side code
-├── test/                 # Tests
-├── docs/                 # Generated documentation
-└── config/               # Configuration files
+├── god-panel-nuxt/         # Nuxt application (main app)
+│   ├── app/               # Nuxt application code
+│   │   ├── components/    # Vue components
+│   │   ├── composables/   # Nuxt composables
+│   │   ├── pages/         # File-based routing
+│   │   ├── layouts/       # Layout components
+│   │   ├── stores/        # Pinia stores
+│   │   ├── middleware/    # Route middleware
+│   │   ├── plugins/       # Nuxt plugins
+│   │   ├── services/      # Business logic services
+│   │   └── utils/         # Utility functions
+│   ├── assets/            # Static assets
+│   ├── i18n/              # Internationalization files
+│   ├── public/            # Public static files
+│   ├── nuxt.config.ts     # Nuxt configuration
+│   └── package.json       # Dependencies
+├── god-panel-docs-vite/   # Documentation site
+└── README.md              # Project overview
 ```
 
 ## Code Standards

@@ -10,7 +10,7 @@ Welcome to the official documentation for God Panel projects. This comprehensive
 
 ## What is God Panel?
 
-God Panel is a modern, feature-rich admin dashboard system built with Nuxt 3 and Vue 3. It provides a complete solution for building administrative interfaces with beautiful design, powerful functionality, and excellent developer experience.
+God Panel is a modern, feature-rich admin dashboard system built with nuxt 4 and Vue 3. It provides a complete solution for building administrative interfaces with beautiful design, powerful functionality, and excellent developer experience.
 
 ## Documentation Structure
 

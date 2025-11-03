@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "God Panel"
   text: "Modern Admin Dashboard System"
-  tagline: Build powerful admin interfaces with Vue 3, Nuxt 3, and TypeScript
+  tagline: Build powerful admin interfaces with Vue 3, nuxt 4, and TypeScript
   image:
     src: /hero-image.svg
     alt: God Panel Dashboard
@@ -24,8 +24,8 @@ hero:
       link: /content/api/index
 
 features:
-  - title: Vue 3 + Nuxt 3
-    details: Built on modern Vue 3 Composition API with Nuxt 3's powerful features including SSR, file-based routing, and auto-imports.
+  - title: Vue 3 + nuxt 4
+    details: Built on modern Vue 3 Composition API with nuxt 4's powerful features including SSR, file-based routing, and auto-imports.
     icon: 🚀
   - title: TypeScript Ready
     details: Full TypeScript support with comprehensive type definitions for all components, APIs, and configuration options.
@@ -156,7 +156,7 @@ Learn how to contribute to the God Panel ecosystem.
 
 ### Modern Tech Stack
 - **Vue 3** with Composition API
-- **Nuxt 3** for full-stack development
+- **nuxt 4** for full-stack development
 - **TypeScript** for type safety
 - **Tailwind CSS** for styling
 - **Pinia** for state management

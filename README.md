@@ -8,11 +8,11 @@
 
 ## 📖 What is God Panel?
 
-God Panel is a modern, feature-rich admin dashboard system built with Nuxt 3 and Vue 3. It provides a complete solution for building administrative interfaces with beautiful design, powerful functionality, and excellent developer experience.
+God Panel is a modern, feature-rich admin dashboard system built with nuxt 4 and Vue 3. It provides a complete solution for building administrative interfaces with beautiful design, powerful functionality, and excellent developer experience.
 
 ## ✨ Features
 
-- 🚀 **Modern Tech Stack**: Built with Nuxt 3, Vue 3, and TypeScript
+- 🚀 **Modern Tech Stack**: Built with nuxt 4, Vue 3, and TypeScript
 - 🎨 **Beautiful UI**: Modern design system with customizable themes
 - 🔧 **Component Library**: Comprehensive set of reusable components
 - 🌐 **Internationalization**: Full i18n support for multiple languages

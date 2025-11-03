@@ -11,7 +11,7 @@ Complete documentation for God Panel's API endpoints and services.
 
 ## Overview
 
-The God Panel API provides RESTful endpoints for all application functionality. The API is built with Nuxt 3's server-side capabilities and follows RESTful conventions.
+The God Panel API provides RESTful endpoints for all application functionality. The API is built with nuxt 4's server-side capabilities and follows RESTful conventions.
 
 ## Base URL
 

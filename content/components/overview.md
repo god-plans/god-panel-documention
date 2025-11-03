@@ -835,7 +835,7 @@ Description of the new component.
 ## Resources
 
 - **[Vue 3 Documentation](https://vuejs.org/)**
-- **[Nuxt 3 Components](https://nuxt.com/docs/guide/directory-structure/components)**
+- **[nuxt 4 Components](https://nuxt.com/docs/guide/directory-structure/components)**
 - **[TypeScript with Vue](https://vuejs.org/guide/typescript/overview.html)**
 - **[Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)**
 

@@ -31,7 +31,7 @@ All notable changes to God Panel will be documented in this file.
 ## [2.0.0] - 2025-01-15
 
 ### 🚀 Features
-- **Complete Rewrite**: Migrated to Nuxt 3 and Vue 3
+- **Complete Rewrite**: Migrated to nuxt 4 and Vue 3
 - **New Architecture**: Modular component system
 - **Theme System**: Customizable themes with CSS variables
 - **Authentication**: Built-in auth system with multiple providers
@@ -40,7 +40,7 @@ All notable changes to God Panel will be documented in this file.
 - **API Integration**: RESTful API client with caching
 
 ### 🏗️ Architecture Changes
-- Moved from Nuxt 2 to Nuxt 3
+- Moved from Nuxt 2 to nuxt 4
 - Implemented Composition API throughout
 - Added Pinia for state management
 - Created composables for reusable logic
@@ -126,7 +126,7 @@ All notable changes to God Panel will be documented in this file.
 ## [1.0.0] - 2023-12-01
 
 ### 🚀 Initial Release
-- Basic Nuxt 3 project structure
+- Basic nuxt 4 project structure
 - Core component library
 - Theme system foundation
 - Authentication framework
@@ -168,7 +168,7 @@ cp -r my-project my-project-backup
 npm install @nuxt/kit@latest vue@latest
 
 # 3. Update configuration
-# - Update nuxt.config.ts to Nuxt 3 format
+# - Update nuxt.config.ts to nuxt 4 format
 # - Update components to Composition API
 # - Update stores to Pinia
 

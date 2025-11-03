@@ -39,7 +39,7 @@ npm run dev
 
 ### Option 2: Create from Template
 
-If you want to start fresh with Nuxt 3 and add God Panel features:
+If you want to start fresh with nuxt 4 and add God Panel features:
 
 ```bash
 # Create a new Nuxt project
@@ -274,7 +274,7 @@ const login = async (credentials: { email: string; password: string }) => {
 
 ### Route Configuration
 
-God Panel uses **file-based routing** with Nuxt 3. Pages are automatically created from files in the `app/pages/` directory:
+God Panel uses **file-based routing** with nuxt 4. Pages are automatically created from files in the `app/pages/` directory:
 
 ```
 app/pages/
