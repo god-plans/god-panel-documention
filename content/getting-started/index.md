@@ -483,12 +483,12 @@ logger.time('Data export') // Timer for performance monitoring
 
 Now that you understand the God Panel structure:
 
-- **[Services Documentation](../services)** - Learn about API client, notifications, and logging
-- **[Component Documentation](../components)** - Explore the component library
-- **[Theme Customization](../guides/theming)** - Customize appearance and colors
-- **[Authentication Guide](../guides/authentication)** - Set up user authentication
+- **[Services Documentation](/content/services/index)** - Learn about API client, notifications, and logging
+- **[Component Documentation](/content/components/overview)** - Explore the component library
+- **[Theme Customization](/content/guides/theming)** - Customize appearance and colors
+- **[Authentication Guide](/content/guides/authentication)** - Set up user authentication
 
-**Ready to build?** Check out the **[Services Overview](../services)** to understand the core systems, then explore **[Component Documentation](../components)** to start building your interface!
+**Ready to build?** Check out the **[Services Overview](/content/services/index)** to understand the core systems, then explore **[Component Documentation](/content/components/overview)** to start building your interface!
 
 ## Troubleshooting
 
@@ -523,7 +523,7 @@ npm run prepare
 
 If you encounter issues:
 
-1. Check the [Troubleshooting Guide](./troubleshooting)
+1. Check the [Quick Start Guide](/content/guides/quick-start) troubleshooting section
 2. Search existing [GitHub Issues](https://github.com/your-org/god-panel/issues)
 3. Create a new issue with:
    - Your Node.js version (`node --version`)

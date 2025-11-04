@@ -1234,10 +1234,10 @@ export default defineNuxtConfig({
 
 After implementing authentication:
 
-1. **[User Management](./user-management)** - Complete user administration
-2. **[Role Management](./roles)** - Advanced permission system
-3. **[API Security](./api-security)** - Secure your endpoints
-4. **[Testing](./testing)** - Test authentication flows
+1. **[Services](/content/services/index)** - Complete service architecture
+2. **[Components](/content/components/overview)** - UI component library
+3. **[API Reference](/content/api/index)** - Backend integration
+4. **[Examples](/content/examples/basic-usage)** - Authentication code examples
 
 ## Resources
 

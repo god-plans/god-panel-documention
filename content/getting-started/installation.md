@@ -359,7 +359,7 @@ After successful installation:
 
 1. **[Configuration Guide](./configuration)** - Set up your application
 2. **[Authentication Setup](../guides/authentication)** - Configure user management
-3. **[Theme Customization](../guides/theme)** - Customize appearance
-4. **[Development Guide](../guides/development)** - Start developing features
+3. **[Theme Customization](/content/guides/theming)** - Customize appearance
+4. **[Quick Start Guide](/content/guides/quick-start)** - Start developing features
 
 Happy installing! 🚀

@@ -599,6 +599,6 @@ describe('AuthService', () => {
 - **[API Client Service Documentation](./api-client)** - Detailed HTTP client features
 - **[Toast Service Documentation](./toast)** - Notification system details
 - **[Logger Service Documentation](./logger)** - Logging and debugging tools
-- **[Composables Documentation](../composables)** - Vue composables integration
-- **[Components Documentation](../components)** - UI components overview
+- **[Composables Documentation](/content/composables/index)** - Vue composables integration
+- **[Components Documentation](/content/components/overview)** - UI components overview
 

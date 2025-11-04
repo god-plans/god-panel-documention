@@ -1253,4 +1253,4 @@ Have a useful utility or code example? We'd love to see it!
 
 ---
 
-**Next**: Check out the **[Component Library Documentation](../components)** for more specific component examples!
+**Next**: Check out the **[Component Library Documentation](/content/components/overview)** for more specific component examples!

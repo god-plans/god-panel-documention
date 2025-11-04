@@ -638,9 +638,9 @@ const mobileNavItems = computed(() => {
 
 ## Next Steps
 
-- **[Layout System Documentation](../layouts)** - Complete layout components
-- **[Theme Components Documentation](../theme)** - Theme customization options
-- **[Settings Components Documentation](../settings)** - Settings drawer components
-- **[Settings Store Documentation](../../stores/settings)** - Navigation preferences
-- **[Navigation Utils](../../utils/routes)** - Navigation configuration and utilities
+- **[Layout Components](/content/components/overview)** - Complete layout components
+- **[Theme Components](/content/components/theme/index)** - Theme customization options
+- **[Settings Components](/content/components/settings/index)** - Settings drawer components
+- **[Settings Store](/content/api/index)** - Navigation preferences
+- **[Navigation Utils](/content/api/index)** - Navigation configuration and utilities
 

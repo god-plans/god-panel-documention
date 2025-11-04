@@ -593,10 +593,10 @@ export const validateConfig = () => {
 
 After configuration:
 
-1. **[Authentication Setup](../guides/authentication)** - Configure user authentication
-2. **[Theme Customization](../guides/theme)** - Customize appearance
-3. **[Development Guide](../guides/development)** - Start developing features
-4. **[Deployment Guide](../guides/deployment)** - Deploy your application
+1. **[Authentication Setup](/content/guides/authentication)** - Configure user authentication
+2. **[Theme Customization](/content/guides/theming)** - Customize appearance
+3. **[Quick Start Guide](/content/guides/quick-start)** - Start developing features
+4. **[Deployment Guide](/content/deployment)** - Deploy your application
 
 ## Troubleshooting
 

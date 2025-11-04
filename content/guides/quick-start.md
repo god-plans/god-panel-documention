@@ -401,12 +401,12 @@ Congratulations! You now have a basic God Panel application running. Here's what
 ### 🚀 Explore Features
 - **[Authentication Guide](./authentication)** - Complete user management
 - **[Theming Guide](./theming)** - Customize appearance
-- **[Component Library](../components)** - Use pre-built components
+- **[Component Library](/content/components/overview)** - Use pre-built components
 
 ### 📚 Learn More
-- **[Configuration Guide](../getting-started/configuration)** - Advanced setup
-- **[API Reference](../api)** - Backend integration
-- **[Deployment Guide](../deployment)** - Production deployment
+- **[Configuration Guide](/content/getting-started/configuration)** - Advanced setup
+- **[API Reference](/content/api/index)** - Backend integration
+- **[Deployment Guide](/content/deployment)** - Production deployment
 
 ### 🛠️ Build Something
 - Add user management pages
@@ -474,9 +474,9 @@ npm run clean        # Clear cache and builds
 
 Now that you have a basic setup, explore these essential features:
 
-- **[Services Documentation](../services)** - API client, notifications, and logging systems
+- **[Services Documentation](/content/services/index)** - API client, notifications, and logging systems
 - **[Authentication Guide](./authentication)** - Complete user management system
-- **[Component Documentation](../components)** - UI components and layouts
+- **[Component Documentation](/content/components/overview)** - UI components and layouts
 - **[Theme Customization](./theming)** - Visual customization options
 
-**Ready to build?** Start with the **[Services Overview](../services)** to understand the core systems!
+**Ready to build?** Start with the **[Services Overview](/content/services/index)** to understand the core systems!

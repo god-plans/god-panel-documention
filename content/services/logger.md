@@ -1073,5 +1073,5 @@ interface LoggerConfig {
 
 - **[Toast Service Documentation](../services/toast)** - Notification system integration
 - **[API Client Service Documentation](../services/api-client)** - HTTP client error handling
-- **[Composables Documentation](../../composables)** - Vue composables for logging
-- **[Error Boundary Components](../../components/common)** - Error handling components
+- **[Composables Documentation](/content/composables/index)** - Vue composables for logging
+- **[Error Boundary Components](/content/components/common/index)** - Error handling components

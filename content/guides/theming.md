@@ -1587,10 +1587,10 @@ export const colorPalette = {
 
 After implementing theming:
 
-1. **[Component Library](../components)** - Style your components
-2. **[Internationalization](./i18n)** - Add multi-language support
-3. **[Advanced Layouts](./layouts)** - Create complex layouts
-4. **[Performance Optimization](./performance)** - Optimize theme loading
+1. **[Component Library](/content/components/overview)** - Style your components
+2. **[i18n Guide](/content/guides/i18n)** - Add multi-language support
+3. **[Layout Components](/content/components/overview)** - Use layout components
+4. **[Deployment Guide](/content/deployment)** - Production optimization
 
 ## Resources
 

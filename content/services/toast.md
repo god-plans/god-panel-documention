@@ -992,7 +992,7 @@ type ToastPosition =
 
 ## Next Steps
 
-- **[Toast Components Documentation](../../components/common)** - Toast UI components
+- **[Toast Components Documentation](/content/components/common/index)** - Toast UI components
 - **[Logger Service Documentation](../services/logger)** - Logging and error handling
 - **[API Client Service Documentation](../services/api-client)** - HTTP client integration
-- **[Composables Documentation](../../composables)** - Vue composables for notifications
+- **[Composables Documentation](/content/composables/index)** - Vue composables for notifications

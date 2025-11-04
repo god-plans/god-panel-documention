@@ -16,22 +16,22 @@ God Panel is a modern, feature-rich admin dashboard system built with nuxt 4 and
 
 This documentation is organized into several key sections:
 
-### 🚀 [Getting Started](./getting-started)
+### 🚀 [Getting Started](/content/getting-started/index)
 Learn how to install, configure, and run your first God Panel project.
 
-### 📚 [Guides](./guides)
+### 📚 [Guides](/content/guides/quick-start)
 Comprehensive guides covering authentication, API usage, customization, and best practices.
 
-### 🧩 [Components](./components)
+### 🧩 [Components](/content/components/overview)
 Detailed documentation for all available components, their props, events, and usage examples.
 
-### 🔧 [Services](./services)
+### 🔧 [Services](/content/services/index)
 Core services including API client, toast notifications, logging system, and integration patterns.
 
-### 🗂️ [State Management](./stores)
+### 🗂️ [State Management](/content/api/index)
 Pinia stores for application state management and data persistence.
 
-### 🔌 [API Reference](./api)
+### 🔌 [API Reference](/content/api/index)
 Complete API documentation with endpoints, parameters, and response formats.
 
 ## Quick Start
@@ -61,8 +61,8 @@ npm run build
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./contributing) for details on how to get involved.
+We welcome contributions! Please see our [Contributing Guide](/content/contributing) for details on how to get involved.
 
 ---
 
-**Next Steps**: Start with the [Getting Started](./getting-started) section to begin your God Panel journey.
+**Next Steps**: Start with the [Getting Started](/content/getting-started/index) section to begin your God Panel journey.
