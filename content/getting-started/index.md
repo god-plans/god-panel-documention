@@ -25,7 +25,7 @@ The fastest way to get started is using the complete God Panel project:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/god-panel.git
+git clone https://github.com/god-plans/god-panel-documention.git
 cd god-panel/god-panel-nuxt
 
 # Install dependencies
@@ -524,7 +524,7 @@ npm run prepare
 If you encounter issues:
 
 1. Check the [Quick Start Guide](/content/guides/quick-start) troubleshooting section
-2. Search existing [GitHub Issues](https://github.com/your-org/god-panel/issues)
+2. Search existing [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues)
 3. Create a new issue with:
    - Your Node.js version (`node --version`)
    - Your npm version (`npm --version`)

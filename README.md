@@ -41,7 +41,7 @@ God Panel is a modern, feature-rich admin dashboard system built with nuxt 4 and
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-org/god-panel.git
+   git clone https://github.com/god-plans/god-panel-documention.git
    cd god-panel
    ```
 
@@ -163,17 +163,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙋‍♀️ Support & Community
 
 - **📖 Documentation**: You're here! Browse the complete docs
-- **🐛 Issues**: [Report bugs and request features](https://github.com/your-org/god-panel/issues)
-- **💬 Discussions**: [Community discussions and Q&A](https://github.com/your-org/god-panel/discussions)
+- **🐛 Issues**: [Report bugs and request features](https://github.com/god-plans/god-panel-documention/issues)
+- **💬 Discussions**: [Community discussions and Q&A](https://github.com/god-plans/god-panel-documention/discussions)
 - **📧 Email**: Contact us at [hello@godpanel.dev](mailto:hello@godpanel.dev)
 - **🐦 Twitter**: Follow [@godpanel](https://twitter.com/godpanel)
 - **💬 Discord**: Join our [community server](https://discord.gg/god-panel)
 
 ## 🔗 Related Projects
 
-- **[God Panel Core](https://github.com/your-org/god-panel)** - Main application
-- **[God Panel Components](https://github.com/your-org/god-panel-components)** - Component library
-- **[God Panel Templates](https://github.com/your-org/god-panel-templates)** - Starter templates
+- **[God Panel Core](https://github.com/god-plans/god-panel-documention)** - Main application
+- **[God Panel Components](https://github.com/god-plans/god-panel-documention-components)** - Component library
+- **[God Panel Templates](https://github.com/god-plans/god-panel-documention-templates)** - Starter templates
 
 ## 🏆 Acknowledgments
 

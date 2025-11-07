@@ -447,8 +447,8 @@ npm run dev
 ### Getting Help
 
 - **Documentation**: Check other guides in this documentation
-- **Issues**: [GitHub Issues](https://github.com/your-org/god-panel/issues)
-- **Discussions**: [Community Discussions](https://github.com/your-org/god-panel/discussions)
+- **Issues**: [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues)
+- **Discussions**: [Community Discussions](https://github.com/god-plans/god-panel-documention/discussions)
 
 ## Quick Commands
 

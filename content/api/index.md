@@ -521,8 +521,8 @@ Check the [Changelog](./changelog) for API changes and migration guides.
 ### Getting Help
 
 - **Documentation**: This API reference
-- **Issues**: [GitHub Issues](https://github.com/your-org/god-panel/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-org/god-panel/discussions)
+- **Issues**: [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/god-plans/god-panel-documention/discussions)
 
 ### Rate Limits
 

@@ -28,7 +28,7 @@ This guide covers detailed installation options for God Panel.
 
 ```bash
 # Clone the God Panel Nuxt application
-git clone https://github.com/your-org/god-panel.git
+git clone https://github.com/god-plans/god-panel-documention.git
 cd god-panel/god-panel-nuxt
 
 # Install dependencies
@@ -350,7 +350,7 @@ If you encounter issues during installation:
 1. Verify your Node.js version: `node --version`
 2. Check npm version: `npm --version`
 3. Review error logs carefully
-4. Search existing issues: [GitHub Issues](https://github.com/your-org/god-panel/issues)
+4. Search existing issues: [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues)
 5. Create a new issue with system information
 
 ## Next Steps

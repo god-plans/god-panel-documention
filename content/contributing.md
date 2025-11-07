@@ -12,7 +12,7 @@ We welcome contributions to God Panel! This guide will help you get started.
 ## Ways to Contribute
 
 ### 🐛 Bug Reports
-- Use the [GitHub Issues](https://github.com/your-org/god-panel/issues) page
+- Use the [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues) page
 - Provide detailed reproduction steps
 - Include environment information (Node.js version, OS, etc.)
 - Add relevant logs and error messages
@@ -46,7 +46,7 @@ Docker
 ### Local Development
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/god-panel.git
+git clone https://github.com/god-plans/god-panel-documention.git
 cd god-panel/god-panel-nuxt
 
 # Install dependencies
@@ -319,7 +319,7 @@ All contributors will be recognized in:
 ### Development Questions
 - Check existing documentation first
 - Search GitHub issues and discussions
-- Ask in [GitHub Discussions](https://github.com/your-org/god-panel/discussions)
+- Ask in [GitHub Discussions](https://github.com/god-plans/god-panel-documention/discussions)
 - Join our Discord community
 
 ### Reporting Issues

@@ -40,7 +40,7 @@ Get up and running in minutes:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/god-panel.git
+git clone https://github.com/god-plans/god-panel-documention.git
 cd god-panel
 
 # Install dependencies
@@ -55,8 +55,8 @@ npm run build
 
 ## Community & Support
 
-- **GitHub Issues**: [Report bugs and request features](https://github.com/your-org/god-panel/issues)
-- **Discussions**: [Community discussions and Q&A](https://github.com/your-org/god-panel/discussions)
+- **GitHub Issues**: [Report bugs and request features](https://github.com/god-plans/god-panel-documention/issues)
+- **Discussions**: [Community discussions and Q&A](https://github.com/god-plans/god-panel-documention/discussions)
 - **Documentation**: You're here! 🎉
 
 ## Contributing

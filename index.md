@@ -234,9 +234,9 @@ Comprehensive guides and API reference to help you build amazing admin interface
 ### 💬 Community
 Join our community of developers building with God Panel.
 
-- [GitHub Discussions](https://github.com/your-org/god-panel/discussions)
+- [GitHub Discussions](https://github.com/god-plans/god-panel-documention/discussions)
 - [Discord Community](https://discord.gg/god-panel)
-- [GitHub Issues](https://github.com/your-org/god-panel/issues)
+- [GitHub Issues](https://github.com/god-plans/god-panel-documention/issues)
 
 ### 🚀 Enterprise Support
 Get priority support and professional services for your projects.

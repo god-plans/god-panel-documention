@@ -205,7 +205,7 @@ export default defineConfig({
 
     // Social links
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-org/god-panel' },
+      { icon: 'github', link: 'https://github.com/god-plans/god-panel-documention' },
       { icon: 'twitter', link: 'https://twitter.com/godpanel' },
       { icon: 'discord', link: 'https://discord.gg/god-panel' }
     ],
@@ -217,7 +217,7 @@ export default defineConfig({
 
     // Edit link
     editLink: {
-      pattern: 'https://github.com/your-org/god-panel-docs/edit/main/:path',
+      pattern: 'https://github.com/god-plans/god-panel-documention-docs/edit/main/:path',
       text: 'Edit this page on GitHub'
     },
 
