@@ -20,6 +20,9 @@ hero:
       text: Components
       link: /content/components/overview
     - theme: alt
+      text: State Management
+      link: /content/stores/index
+    - theme: alt
       text: API Reference
       link: /content/api/index
 
@@ -36,6 +39,9 @@ features:
   - title: Component Library
     details: Comprehensive component library including layout components, navigation, settings panels, and UI utilities.
     icon: 🧩
+  - title: State Management
+    details: Powerful Pinia stores for authentication, settings, and application state management with SSR support.
+    icon: 📦
   - title: Theme System
     details: Flexible theming system with dark/light mode support, CSS custom properties, and easy customization options.
     icon: 🎨
@@ -119,6 +125,13 @@ Core services including API client, notifications, logging, and integration patt
 - [API Client Service](/content/services/api-client)
 - [Toast Service](/content/services/toast)
 - [Logger Service](/content/services/logger)
+
+### 📦 State Management
+Pinia stores for authentication, settings, and application state with SSR support.
+
+- [State Management Overview](/content/stores/index)
+- [Authentication Store](/content/stores/auth)
+- [Settings Store](/content/stores/settings)
 
 ### 🔌 API Reference
 Complete API documentation for backend integration and customization.
@@ -289,6 +302,12 @@ Stay updated with our development plans and upcoming features.
 <strong>🧩 Components</strong><br>
 [Component Library →](/content/components/overview)<br>
 [Settings Panel →](/content/components/settings/index)
+</div>
+
+<div class="space-y-2">
+<strong>📦 State</strong><br>
+[Auth Store →](/content/stores/auth)<br>
+[Settings Store →](/content/stores/settings)
 </div>
 
 <div class="space-y-2">

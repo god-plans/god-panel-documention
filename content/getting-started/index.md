@@ -541,7 +541,7 @@ const customTheme = {
 }
 ```
 
-## Services Integration
+## Core Systems & Utilities
 
 ### API Client Service
 
@@ -586,6 +586,215 @@ import { logger } from '~/services/logger'
 logger.info('User logged in', { userId: '123' })
 logger.error('API request failed', { endpoint: '/api/users' })
 logger.time('Data export') // Timer for performance monitoring
+```
+
+### Utility Functions
+
+God Panel provides comprehensive utility functions for common tasks:
+
+#### API Utilities (`utils/api.ts`)
+
+```typescript
+import { apiEndpoints, handleApiError, createApiResponse } from '~/utils/api'
+
+// Use predefined API endpoints
+const loginUrl = apiEndpoints.auth.login
+const usersUrl = apiEndpoints.users.list
+const updateUserUrl = apiEndpoints.users.update('user-123')
+
+// Handle API errors consistently
+try {
+  const response = await apiClient.post(loginUrl, credentials)
+} catch (error) {
+  const errorMessage = handleApiError(error)
+  toastService.error(errorMessage)
+}
+
+// Create standardized API responses
+const successResponse = createApiResponse(true, userData, 'User created successfully')
+const errorResponse = createApiResponse(false, null, 'Failed to create user')
+```
+
+#### Helper Functions (`utils/helpers.ts`)
+
+```typescript
+import {
+  cn,
+  formatCurrency,
+  formatDate,
+  formatRelativeTime,
+  truncateText,
+  debounce,
+  throttle,
+  isValidEmail,
+  capitalize
+} from '~/utils/helpers'
+
+// CSS class merging (like clsx + tailwind-merge)
+const buttonClasses = cn('btn', 'btn-primary', isActive && 'btn-active')
+
+// Format currency amounts
+const price = formatCurrency(99.99, 'USD') // "$99.99"
+
+// Format dates and relative times
+const formattedDate = formatDate('2024-01-15') // "Jan 15, 2024"
+const relativeTime = formatRelativeTime('2024-01-14') // "1d ago"
+
+// Text manipulation
+const shortText = truncateText('Very long text here', 20) // "Very long text here..."
+const titleCase = capitalize('hello world') // "Hello world"
+
+// Form validation
+const isEmailValid = isValidEmail('user@example.com') // true
+
+// Performance utilities
+const debouncedSearch = debounce((query) => {
+  // Search API call
+}, 300)
+
+const throttledScroll = throttle((event) => {
+  // Handle scroll event
+}, 100)
+```
+
+#### Route Utilities (`utils/routes.ts`)
+
+```typescript
+import {
+  paths,
+  dashboardNavItems,
+  isActiveRoute,
+  generateBreadcrumbs
+} from '~/utils/routes'
+
+// Use predefined route paths
+const dashboardUrl = paths.dashboard.root
+const analyticsUrl = paths.dashboard.analytics
+const settingsUrl = paths.dashboard.settings
+
+// Check active routes for navigation highlighting
+const isDashboardActive = isActiveRoute('/dashboard/analytics', '/dashboard')
+const isSettingsActive = isActiveRoute('/dashboard/settings', '/dashboard/settings')
+
+// Generate breadcrumbs for navigation
+const breadcrumbs = generateBreadcrumbs('/dashboard/group/one')
+// Returns: [{ title: 'Dashboard', path: '/dashboard' }, { title: 'Group', path: '/dashboard/group' }, { title: 'One', path: '/dashboard/group/one' }]
+
+// Access navigation configuration
+const navItems = dashboardNavItems.map(item => ({
+  title: item.title,
+  path: item.path,
+  icon: item.icon,
+  hasChildren: !!item.children
+}))
+```
+
+### State Management (Pinia Stores)
+
+#### Authentication Store (`stores/auth.ts`)
+
+Manage user authentication and session state:
+
+```typescript
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+
+// Reactive state
+const { user, loading, isAuthenticated, isAdmin, displayName } = storeToRefs(authStore)
+
+// Login with credentials or demo account
+const loginResult = await authStore.login({
+  email: 'user@example.com',
+  password: 'password123'
+})
+
+// Demo login for development (email: godpanel@test.com, password: god123)
+await authStore.login({
+  email: 'godpanel@test.com',
+  password: 'god123'
+})
+
+// Register new user
+const registerResult = await authStore.register({
+  email: 'newuser@example.com',
+  password: 'securepassword',
+  firstName: 'John',
+  lastName: 'Doe'
+})
+
+// Update user profile
+const updateResult = await authStore.updateProfile({
+  displayName: 'John Smith',
+  phoneNumber: '+1234567890'
+})
+
+// Logout user
+await authStore.logout()
+
+// Reactive getters
+const canAccessAdmin = computed(() => authStore.isAuthenticated && authStore.isAdmin)
+const userInitials = computed(() => {
+  const name = authStore.displayName
+  return name.split(' ').map(n => n[0]).join('').toUpperCase()
+})
+```
+
+#### Settings Store (`stores/settings.ts`)
+
+Manage application settings and user preferences:
+
+```typescript
+import { useSettingsStore } from '~/stores/settings'
+
+const settingsStore = useSettingsStore()
+
+// Reactive state and computed properties
+const {
+  settings,
+  openDrawer,
+  isRtl,
+  isDarkMode,
+  isMiniLayout,
+  canReset
+} = storeToRefs(settingsStore)
+
+// Update individual settings
+settingsStore.updateField('colorScheme', 'dark')
+settingsStore.updateField('primaryColor', 'cyan')
+settingsStore.updateField('navLayout', 'mini')
+
+// Update multiple settings at once
+settingsStore.updateSettings({
+  contrast: 'high',
+  fontFamily: 'Inter',
+  compactLayout: true
+})
+
+// Reset to defaults
+settingsStore.resetSettings()
+
+// Control settings drawer
+settingsStore.onOpenDrawer()
+settingsStore.onCloseDrawer()
+
+// Reactive theme classes (for dynamic styling)
+const themeClasses = computed(() => ({
+  'dark-theme': settingsStore.isDarkMode,
+  'rtl-layout': settingsStore.isRtl,
+  'mini-sidebar': settingsStore.isMiniLayout,
+  'compact-layout': settingsStore.settings.compactLayout
+}))
+
+// Available color presets
+const colorPresets = [
+  { name: 'Default', value: '#00A76F', key: 'default' },
+  { name: 'Cyan', value: '#078DEE', key: 'cyan' },
+  { name: 'Purple', value: '#7635dc', key: 'purple' },
+  { name: 'Blue', value: '#0C68E9', key: 'blue' },
+  { name: 'Orange', value: '#fda92d', key: 'orange' },
+  { name: 'Red', value: '#FF3030', key: 'red' }
+]
 ```
 
 ## Next Steps
