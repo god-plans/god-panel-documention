@@ -200,14 +200,14 @@ export default defineConfig({
     // Footer
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2024-present God Panel Team'
+      copyright: 'Copyright © 2025-present God Panel Team'
     },
 
     // Social links
     socialLinks: [
       { icon: 'github', link: 'https://github.com/god-plans/god-panel-documention' },
-      { icon: 'twitter', link: 'https://twitter.com/godpanel' },
-      { icon: 'discord', link: 'https://discord.gg/god-panel' }
+      // { icon: 'twitter', link: 'https://twitter.com/godpanel' },
+      // { icon: 'discord', link: 'https://discord.gg/god-panel' }
     ],
 
     // Search
@@ -256,7 +256,7 @@ export default defineConfig({
 
   // Sitemap
   sitemap: {
-    hostname: 'https://docs.godpanel.dev'
+    hostname: 'https://docs.godplans.org/'
   },
 
   // Ignore dead links for now - documentation is still being built

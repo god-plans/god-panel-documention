@@ -40,7 +40,7 @@ Get up and running in minutes:
 
 ```bash
 # Clone the repository
-git clone https://github.com/god-plans/god-panel-documention.git
+git clone https://github.com/god-plans/god-panel-nuxt.git
 cd god-panel
 
 # Install dependencies

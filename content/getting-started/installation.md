@@ -28,8 +28,8 @@ This guide covers detailed installation options for God Panel.
 
 ```bash
 # Clone the God Panel Nuxt application
-git clone https://github.com/god-plans/god-panel-documention.git
-cd god-panel/god-panel-nuxt
+git clone https://github.com/god-plans/god-panel-nuxt.git
+cd god-panel-nuxt
 
 # Install dependencies
 npm install
@@ -47,11 +47,10 @@ If you prefer to start fresh:
 npx nuxi@latest init god-panel-project
 cd god-panel-project
 
-# Install required modules
-npm install @nuxtjs/tailwindcss @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n vuetify @mdi/font @mdi/js
+# Install required modules and dependencies
+npm install @nuxtjs/tailwindcss @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n vuetify @mdi/font @mdi/js axios zod vue-tsc
 
-# Install additional dependencies
-npm install axios zod vue-tsc
+# Start development server
 npm run dev
 ```
 
@@ -62,18 +61,15 @@ npm run dev
 npx nuxi@latest init god-panel-project
 cd god-panel-project
 
-# Install God Panel core dependencies
+# Install core God Panel dependencies
 npm install vue vue-router @nuxt/kit
 
-# Install UI framework (choose one)
-npm install @nuxtjs/tailwindcss  # For Tailwind CSS
-# OR
-npm install @nuxtjs/vuetify     # For Vuetify
+# Install UI and styling dependencies
+npm install @nuxtjs/tailwindcss vuetify @mdi/font @mdi/js
 
-# Install additional dependencies
-npm install @nuxt/content       # For documentation
-npm install @nuxtjs/i18n        # For internationalization
-npm install @pinia/nuxt         # For state management
+# Install state management and utilities
+npm install @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n
+npm install axios zod vue-tsc
 
 # Install development dependencies
 npm install --save-dev @nuxt/devtools
@@ -88,92 +84,176 @@ Create a `.env` file in your project root:
 ```env
 # Application
 NODE_ENV=development
-APP_NAME="God Panel"
-APP_URL=http://localhost:3000
 
-# Database
-DATABASE_URL="your-database-connection-string"
+# API Configuration
+NUXT_PUBLIC_API_URL=http://localhost:4000
+
+# Site Configuration
+NUXT_PUBLIC_SITE_URL=http://localhost:3333
 
 # Authentication
 JWT_SECRET="your-jwt-secret-key"
-JWT_EXPIRES_IN="24h"
+REFRESH_TOKEN_EXPIRY=7d
 
-# API
-API_BASE_URL="https://api.your-domain.com"
+# Feature Flags
+ENABLE_MOCK_DATA=true
+
+# Database (if using backend)
+DATABASE_URL="your-database-connection-string"
+
+# API Key (if using external services)
 API_KEY="your-api-key"
 
-# Email (optional)
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.your-provider.com
-MAIL_PORT=587
-MAIL_USERNAME=your-email@domain.com
-MAIL_PASSWORD=your-email-password
 ```
 
 ### 2. Nuxt Configuration
 
-Update `nuxt.config.ts`:
+Update `nuxt.config.ts` with the actual God Panel configuration:
 
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  // Basic configuration
-  devtools: { enabled: true },
   compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
 
-  // Site information
-  site: {
-    url: process.env.APP_URL || 'http://localhost:3000',
-    name: process.env.APP_NAME || 'God Panel'
+  // Development server configuration
+  devServer: {
+    port: 3333,
+    // host: '0.0.0.0'
   },
-
-  // Runtime configuration
-  runtimeConfig: {
-    public: {
-      appName: process.env.APP_NAME || 'God Panel',
-      appUrl: process.env.APP_URL || 'http://localhost:3000',
-      apiBaseUrl: process.env.API_BASE_URL || '/api'
-    },
-    // Private keys (only available on server-side)
-    jwtSecret: process.env.JWT_SECRET,
-    databaseUrl: process.env.DATABASE_URL,
-    apiKey: process.env.API_KEY
-  },
-
-  // CSS configuration
-  css: ['~/assets/css/main.css'],
 
   // Modules
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxt/content',
-    '@nuxtjs/i18n',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n'
   ],
 
-  // Content module configuration
-  content: {
-    markdown: {
-      anchorLinks: {
-        depth: 4,
-        exclude: [1]
-      }
+  // Auto-imports for better DX
+  imports: {
+    autoImport: true
+  },
+
+  // Runtime config for API
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
+      appName: 'God Panel',
+      version: '1.0.0',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+      enableMockData: process.env.ENABLE_MOCK_DATA === 'true'
     },
-    navigation: {
-      fields: ['title', 'description', 'category']
+    private: {
+      jwtSecret: process.env.JWT_SECRET,
+      refreshTokenExpiry: process.env.REFRESH_TOKEN_EXPIRY || '7d'
     }
   },
 
-  // Internationalization
-  i18n: {
-    locales: ['en', 'fa'],
-    defaultLocale: 'en',
-    strategy: 'prefix_except_default'
+  // Color mode configuration
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
   },
 
-  // Pinia configuration
-  pinia: {
-    autoImports: ['defineStore', 'storeToRefs']
+  // CSS configuration
+  css: [
+    '~/assets/css/main.css',
+    // Load Vuetify styles
+    'vuetify/lib/styles/main.sass',
+    // Load MDI font for icons
+    '@mdi/font/css/materialdesignicons.min.css'
+  ],
+
+  // Build configuration
+  build: {
+    transpile: ['vuetify']
+  },
+
+  // SSR configuration
+  ssr: true,
+
+  // Nitro configuration for better performance
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+    experimental: {
+      wasm: true
+    }
+  },
+
+  // Vite configuration for optimization
+  vite: {
+    optimizeDeps: {
+      include: ['vue', 'vue-router', 'pinia', '@vueuse/core']
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['vue', 'vue-router'],
+            ui: ['vuetify', '@mdi/js'],
+            utils: ['axios', 'zod', 'clsx']
+          }
+        }
+      }
+    }
+  },
+
+  // Experimental features
+  experimental: {
+    payloadExtraction: false,
+    viewTransition: true
+  },
+
+  // TypeScript configuration
+  typescript: {
+    strict: true,
+    typeCheck: false // Disable during development for better performance
+  },
+
+  // App configuration
+  app: {
+    head: {
+      title: 'Gods Projects - Divine Innovation',
+      meta: [
+        { name: 'description', content: 'Modern dashboard built with divine innovation and cutting-edge technology.' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#6366f1' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/god-pure-dark.png' },
+        { rel: 'apple-touch-icon', href: '/god-pure-dark.png' }
+      ]
+    }
+  },
+
+  // i18n configuration
+  i18n: {
+    locales: [
+      {
+        code: 'fa',
+        language: 'fa-IR',
+        dir: 'rtl',
+        files: ['fa.json']
+      },
+      {
+        code: 'en',
+        language: 'en-US',
+        files: ['en.json'],
+        dir: 'ltr'
+      }
+    ],
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    detectBrowserLanguage: false,
+    langDir: './locales/'
   }
 })
 ```
@@ -205,7 +285,7 @@ Ensure your `package.json` has these scripts:
 npm run dev
 ```
 
-Visit `http://localhost:3000` to verify the installation.
+Visit `http://localhost:3333` to verify the installation.
 
 ### 2. Build Test
 

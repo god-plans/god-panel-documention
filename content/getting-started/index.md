@@ -25,8 +25,8 @@ The fastest way to get started is using the complete God Panel project:
 
 ```bash
 # Clone the repository
-git clone https://github.com/god-plans/god-panel-documention.git
-cd god-panel/god-panel-nuxt
+git clone https://github.com/god-plans/god-panel-nuxt.git
+cd god-panel-nuxt
 
 # Install dependencies
 npm install
@@ -94,45 +94,147 @@ The `nuxt.config.ts` file is already configured with all necessary modules:
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
   // Development server configuration
   devServer: {
-    port: 3333, // Runs on port 3333 instead of 3000
+    port: 3333,
+    // host: '0.0.0.0'
   },
 
   // Modules
   modules: [
-    '@nuxtjs/tailwindcss',    // CSS framework
-    '@pinia/nuxt',            // State management
-    '@nuxtjs/color-mode',     // Dark/light theme
-    '@nuxtjs/i18n',           // Internationalization
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n'
   ],
 
-  // CSS configuration
-  css: [
-    '~/assets/css/main.css',
-    'vuetify/lib/styles/main.sass',  // Vuetify styles
-    '@mdi/font/css/materialdesignicons.min.css' // Material Design icons
-  ],
+  // Auto-imports for better DX
+  imports: {
+    autoImport: true
+  },
 
-  // Runtime configuration
+  // Runtime config for API
   runtimeConfig: {
     public: {
       apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
       appName: 'God Panel',
       version: '1.0.0',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       enableMockData: process.env.ENABLE_MOCK_DATA === 'true'
+    },
+    private: {
+      jwtSecret: process.env.JWT_SECRET,
+      refreshTokenExpiry: process.env.REFRESH_TOKEN_EXPIRY || '7d'
     }
   },
 
-  // i18n configuration for multi-language support
+  // Color mode configuration
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
+  },
+
+  // CSS configuration
+  css: [
+    '~/assets/css/main.css',
+    // Load Vuetify styles
+    'vuetify/lib/styles/main.sass',
+    // Load MDI font for icons
+    '@mdi/font/css/materialdesignicons.min.css'
+  ],
+
+  // Build configuration
+  build: {
+    transpile: ['vuetify']
+  },
+
+  // SSR configuration
+  ssr: true,
+
+  // Nitro configuration for better performance
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+    experimental: {
+      wasm: true
+    }
+  },
+
+  // Vite configuration for optimization
+  vite: {
+    optimizeDeps: {
+      include: ['vue', 'vue-router', 'pinia', '@vueuse/core']
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['vue', 'vue-router'],
+            ui: ['vuetify', '@mdi/js'],
+            utils: ['axios', 'zod', 'clsx']
+          }
+        }
+      }
+    }
+  },
+
+  // Experimental features
+  experimental: {
+    payloadExtraction: false,
+    viewTransition: true
+  },
+
+  // TypeScript configuration
+  typescript: {
+    strict: true,
+    typeCheck: false // Disable during development for better performance
+  },
+
+  // App configuration
+  app: {
+    head: {
+      title: 'Gods Projects - Divine Innovation',
+      meta: [
+        { name: 'description', content: 'Modern dashboard built with divine innovation and cutting-edge technology.' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#6366f1' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/god-pure-dark.png' },
+        { rel: 'apple-touch-icon', href: '/god-pure-dark.png' }
+      ]
+    }
+  },
+
+  // i18n configuration
   i18n: {
     locales: [
-      { code: 'en', language: 'en-US' },
-      { code: 'fa', language: 'fa-IR', dir: 'rtl' }
+      {
+        code: 'fa',
+        language: 'fa-IR',
+        dir: 'rtl',
+        files: ['fa.json']
+      },
+      {
+        code: 'en',
+        language: 'en-US',
+        files: ['en.json'],
+        dir: 'ltr'
+      }
     ],
-    defaultLocale: 'en'
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    detectBrowserLanguage: false,
+    langDir: './locales/'
   }
 })
 ```
@@ -142,20 +244,27 @@ export default defineNuxtConfig({
 Create a `.env` file in the root directory:
 
 ```env
+# Application
+NODE_ENV=development
+
 # API Configuration
 NUXT_PUBLIC_API_URL=http://localhost:4000
-API_TIMEOUT=10000
 
-# Authentication (if using real backend)
-JWT_SECRET=your-secret-key
+# Site Configuration
+NUXT_PUBLIC_SITE_URL=http://localhost:3333
+
+# Authentication
+JWT_SECRET="your-jwt-secret-key"
 REFRESH_TOKEN_EXPIRY=7d
 
 # Feature Flags
 ENABLE_MOCK_DATA=true
-ENABLE_API_LOGGING=false
 
-# Application
-NODE_ENV=development
+# Database (if using backend)
+DATABASE_URL="your-database-connection-string"
+
+# API Key (if using external services)
+API_KEY="your-api-key"
 ```
 
 ## Running the Application

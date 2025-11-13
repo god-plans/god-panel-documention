@@ -18,57 +18,147 @@ The main configuration file is `nuxt.config.ts`. Here are the key sections:
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  // Development
-  devtools: { enabled: true },
   compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
 
-  // Site Information
-  site: {
-    url: 'https://your-domain.com',
-    name: 'Your Admin Panel'
-  },
-
-  // Runtime Configuration
-  runtimeConfig: {
-    public: {
-      appName: 'God Panel',
-      appUrl: 'https://your-domain.com',
-      apiBaseUrl: '/api'
-    },
-    // Server-only keys
-    jwtSecret: process.env.JWT_SECRET,
-    databaseUrl: process.env.DATABASE_URL,
-    emailConfig: {
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+  // Development server configuration
+  devServer: {
+    port: 3333,
+    // host: '0.0.0.0'
   },
 
   // Modules
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxt/content',
-    '@nuxtjs/i18n',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/i18n'
   ],
 
-  // Content Configuration
-  content: {
-    markdown: {
-      anchorLinks: { depth: 4, exclude: [1] }
+  // Auto-imports for better DX
+  imports: {
+    autoImport: true
+  },
+
+  // Runtime config for API
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:4000',
+      appName: 'God Panel',
+      version: '1.0.0',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+      enableMockData: process.env.ENABLE_MOCK_DATA === 'true'
     },
-    navigation: {
-      fields: ['title', 'description', 'category']
+    private: {
+      jwtSecret: process.env.JWT_SECRET,
+      refreshTokenExpiry: process.env.REFRESH_TOKEN_EXPIRY || '7d'
     }
   },
 
-  // Internationalization
+  // Color mode configuration
+  colorMode: {
+    preference: 'light',
+    fallback: 'light',
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
+  },
+
+  // CSS configuration
+  css: [
+    '~/assets/css/main.css',
+    // Load Vuetify styles
+    'vuetify/lib/styles/main.sass',
+    // Load MDI font for icons
+    '@mdi/font/css/materialdesignicons.min.css'
+  ],
+
+  // Build configuration
+  build: {
+    transpile: ['vuetify']
+  },
+
+  // SSR configuration
+  ssr: true,
+
+  // Nitro configuration for better performance
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+    experimental: {
+      wasm: true
+    }
+  },
+
+  // Vite configuration for optimization
+  vite: {
+    optimizeDeps: {
+      include: ['vue', 'vue-router', 'pinia', '@vueuse/core']
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['vue', 'vue-router'],
+            ui: ['vuetify', '@mdi/js'],
+            utils: ['axios', 'zod', 'clsx']
+          }
+        }
+      }
+    }
+  },
+
+  // Experimental features
+  experimental: {
+    payloadExtraction: false,
+    viewTransition: true
+  },
+
+  // TypeScript configuration
+  typescript: {
+    strict: true,
+    typeCheck: false // Disable during development for better performance
+  },
+
+  // App configuration
+  app: {
+    head: {
+      title: 'Gods Projects - Divine Innovation',
+      meta: [
+        { name: 'description', content: 'Modern dashboard built with divine innovation and cutting-edge technology.' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#6366f1' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/god-pure-dark.png' },
+        { rel: 'apple-touch-icon', href: '/god-pure-dark.png' }
+      ]
+    }
+  },
+
+  // i18n configuration
   i18n: {
-    locales: ['en', 'fa'],
+    locales: [
+      {
+        code: 'fa',
+        language: 'fa-IR',
+        dir: 'rtl',
+        files: ['fa.json']
+      },
+      {
+        code: 'en',
+        language: 'en-US',
+        files: ['en.json'],
+        dir: 'ltr'
+      }
+    ],
+    strategy: 'no_prefix',
     defaultLocale: 'en',
-    strategy: 'prefix_except_default'
+    detectBrowserLanguage: false,
+    langDir: './locales/'
   }
 })
 ```
@@ -77,58 +167,96 @@ export default defineNuxtConfig({
 
 ### Required Variables
 
-Create a `.env` file:
+Create a `.env` file in your project root:
 
 ```env
 # Application
 NODE_ENV=development
-APP_NAME="God Panel"
-APP_URL=http://localhost:3000
 
-# Database
-DATABASE_URL="your-database-connection-string"
+# API Configuration
+NUXT_PUBLIC_API_URL=http://localhost:4000
+
+# Site Configuration
+NUXT_PUBLIC_SITE_URL=http://localhost:3333
 
 # Authentication
 JWT_SECRET="your-jwt-secret-key"
-JWT_EXPIRES_IN="24h"
+REFRESH_TOKEN_EXPIRY=7d
 
-# API
-API_BASE_URL="https://api.your-domain.com"
+# Feature Flags
+ENABLE_MOCK_DATA=true
+```
+
+### Optional Variables
+
+```env
+# Database (if using backend)
+DATABASE_URL="your-database-connection-string"
+
+# API Key (if using external services)
 API_KEY="your-api-key"
 
-# Email Configuration
+# Email Configuration (if using email features)
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.your-provider.com
 MAIL_PORT=587
 MAIL_USERNAME=your-email@domain.com
 MAIL_PASSWORD=your-email-password
 
-# Storage
-STORAGE_DRIVER=local
-STORAGE_PATH=./storage
-```
-
-### Optional Variables
-
-```env
-# Caching
-REDIS_URL="redis://localhost:6379"
-CACHE_TTL=3600
-
 # Logging
 LOG_LEVEL=info
-LOG_FILE=./logs/app.log
 
 # Security
-CORS_ORIGIN="http://localhost:3000"
-RATE_LIMIT=100
-
-# Features
-ENABLE_REGISTRATION=true
-ENABLE_EMAIL_VERIFICATION=false
+CORS_ORIGIN="http://localhost:3333"
 ```
 
 ## Module Configuration
+
+### Color Mode Configuration
+
+God Panel uses the `@nuxtjs/color-mode` module for dark/light theme switching:
+
+```typescript
+// nuxt.config.ts - Color mode configuration
+colorMode: {
+  preference: 'light',        // Default theme
+  fallback: 'light',          // Fallback if preference fails
+  hid: 'nuxt-color-mode-script',
+  globalName: '__NUXT_COLOR_MODE__',
+  componentName: 'ColorScheme',
+  classPrefix: '',
+  classSuffix: '',
+  storageKey: 'nuxt-color-mode'
+}
+```
+
+### Internationalization (i18n) Configuration
+
+Multi-language support is configured with `@nuxtjs/i18n`:
+
+```typescript
+// nuxt.config.ts - i18n configuration
+i18n: {
+  locales: [
+    {
+      code: 'fa',
+      language: 'fa-IR',
+      dir: 'rtl',
+      files: ['fa.json']
+    },
+    {
+      code: 'en',
+      language: 'en-US',
+      files: ['en.json'],
+      dir: 'ltr'
+    }
+  ],
+  strategy: 'no_prefix',      // No language prefix in URLs
+  defaultLocale: 'en',
+  detectBrowserLanguage: false,
+  langDir: './locales/'       // Translation files location
+}
+```
 
 ### Tailwind CSS Configuration
 
@@ -156,35 +284,6 @@ module.exports = {
   },
   plugins: []
 }
-```
-
-### Vuetify Configuration
-
-```typescript
-// plugins/vuetify.ts
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
-export default defineNuxtPlugin((nuxtApp) => {
-  const vuetify = createVuetify({
-    components,
-    directives,
-    theme: {
-      themes: {
-        light: {
-          colors: {
-            primary: '#3b82f6',
-            secondary: '#64748b',
-            accent: '#f59e0b'
-          }
-        }
-      }
-    }
-  })
-
-  nuxtApp.vueApp.use(vuetify)
-})
 ```
 
 ## Application Settings
@@ -396,33 +495,55 @@ export default defineNuxtConfig({
 
 ### Build Optimization
 
+God Panel includes comprehensive build optimizations:
+
 ```typescript
-// nuxt.config.ts - Production
-export default defineNuxtConfig({
-  // Disable devtools in production
-  devtools: { enabled: false },
+// nuxt.config.ts - Build configuration
+build: {
+  transpile: ['vuetify']  // Transpile Vuetify for compatibility
+},
 
-  // Enable SSR
-  ssr: true,
+// SSR configuration
+ssr: true,
 
-  // Build optimization
-  nitro: {
-    compressPublicAssets: true,
-    minify: true
+// Nitro configuration for better performance
+nitro: {
+  compressPublicAssets: true,  // Compress static assets
+  minify: true,                // Minify code
+  experimental: {
+    wasm: true                 // Enable WebAssembly support
+  }
+},
+
+// Vite configuration for optimization
+vite: {
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'pinia', '@vueuse/core']
   },
-
-  // CSS optimization
-  css: ['~/assets/css/main.css'],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@import "~/assets/scss/variables.scss";'
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router'],    // Core Vue libraries
+          ui: ['vuetify', '@mdi/js'],       // UI libraries
+          utils: ['axios', 'zod', 'clsx']   // Utility libraries
         }
       }
     }
   }
-})
+},
+
+// Experimental features
+experimental: {
+  payloadExtraction: false,  // Disable payload extraction
+  viewTransition: true       // Enable view transitions
+},
+
+// TypeScript configuration
+typescript: {
+  strict: true,
+  typeCheck: false  // Disable during development for better performance
+}
 ```
 
 ## Security Configuration
@@ -436,7 +557,7 @@ export default defineNuxtConfig({
     '/api/**': {
       cors: true,
       headers: {
-        'Access-Control-Allow-Origin': process.env.CORS_ORIGIN || 'http://localhost:3000',
+        'Access-Control-Allow-Origin': process.env.CORS_ORIGIN || 'http://localhost:3333',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Authorization, Content-Type'
       }

@@ -41,8 +41,8 @@ God Panel is a modern, feature-rich admin dashboard system built with nuxt 4 and
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/god-plans/god-panel-documention.git
-   cd god-panel
+   git clone https://github.com/god-plans/god-panel-nuxt.git
+   cd god-panel-nuxt
    ```
 
 2. **Install dependencies**

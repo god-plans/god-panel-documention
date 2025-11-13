@@ -241,9 +241,9 @@ Join our community of developers building with God Panel.
 ### 🚀 Enterprise Support
 Get priority support and professional services for your projects.
 
-- [Enterprise License](https://godpanel.dev/enterprise)
-- [Professional Services](https://godpanel.dev/services)
-- [Custom Development](https://godpanel.dev/custom)
+- [Enterprise License](https://godplans.org/enterprise)
+- [Professional Services](https://godplans.org/services)
+- [Custom Development](https://godplans.org/custom)
 
 </div>
 
