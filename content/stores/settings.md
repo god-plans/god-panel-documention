@@ -433,3 +433,4 @@ const layoutOptions = [
 - **[Theme Customization](/content/guides/theming)** - Advanced theming guide
 - **[Component Documentation](/content/components/overview)** - UI components
 - **[Settings Panel Component](/content/components/settings/index)** - Settings UI implementation
+

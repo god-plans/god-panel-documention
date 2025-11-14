@@ -38,7 +38,7 @@ npm install
 npm run dev
 ```
 
-### Method 2: Create from Scratch
+### Method 2: Create from Scratch (Coming Soon)
 
 If you prefer to start fresh:
 
@@ -54,7 +54,7 @@ npm install @nuxtjs/tailwindcss @pinia/nuxt @nuxtjs/color-mode @nuxtjs/i18n vuet
 npm run dev
 ```
 
-### Method 3: Manual Installation
+### Method 3: Manual Installation (Coming Soon)
 
 ```bash
 # Create new Nuxt project

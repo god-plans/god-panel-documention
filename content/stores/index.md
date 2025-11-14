@@ -291,3 +291,4 @@ Explore the individual store documentation:
 - **[Settings Store](/content/stores/settings)** - Application preferences and theming
 
 For more advanced Pinia features, check the [official Pinia documentation](https://pinia.vuejs.org/).
+

@@ -50,53 +50,6 @@ features:
     icon: ⚡
 ---
 
-## 🚀 Quick Start
-
-Get up and running in minutes with our comprehensive setup guide.
-
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-
-### Installation
-
-```bash
-# Create a new Nuxt project
-npx nuxi@latest init god-panel-project
-cd god-panel-project
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-[📖 Read the Installation Guide →](/content/getting-started/installation)
-
-### Basic Configuration
-
-```typescript
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/content'
-  ],
-
-  css: ['~/assets/css/main.css'],
-
-  runtimeConfig: {
-    public: {
-      siteName: 'God Panel',
-      apiBase: '/api'
-    }
-  }
-})
-```
-
-[📖 View Configuration Options →](/content/getting-started/configuration)
-
-</div>
-
 ## 📚 Documentation Sections
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">

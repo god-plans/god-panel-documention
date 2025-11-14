@@ -299,3 +299,4 @@ expect(authStore.isAuthenticated).toBe(false)
 - **[Authentication Guide](/content/guides/authentication)** - Complete authentication setup guide
 - **[Settings Store](/content/stores/settings)** - Manage user preferences
 - **[Route Protection](/content/guides/authentication#route-protection)** - Secure your application routes
+
